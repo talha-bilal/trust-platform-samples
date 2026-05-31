@@ -1,3 +1,8 @@
+# Local company frontend reference (contents never committed)
+_reference-frontend/*
+!_reference-frontend/README.md
+!_reference-frontend/.gitignore
+
 target/
 .idea/
 *.iml
