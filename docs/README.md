@@ -12,6 +12,7 @@ Deep-dive material for trust platform engineering: **diagrams**, **use cases**, 
 | [diagrams/04-hsm-pkcs11-signing.md](./diagrams/04-hsm-pkcs11-signing.md) | PKCS#11 session pool → HSM |
 | [diagrams/05-pki-lifecycle.md](./diagrams/05-pki-lifecycle.md) | CA, OCSP/CRL, renewal |
 | [diagrams/06-deployment-topology.md](./diagrams/06-deployment-topology.md) | Runtime deployment view |
+| [diagrams/07-java-card-applet-lifecycle.md](./diagrams/07-java-card-applet-lifecycle.md) | Java Card / GlobalPlatform lifecycle |
 
 ## Complex use cases
 
@@ -28,4 +29,5 @@ Deep-dive material for trust platform engineering: **diagrams**, **use cases**, 
 | Demo | Location |
 |------|----------|
 | CSC API walkthrough (curl + JSON) | [csc-remote-signing-openapi/demo/](../csc-remote-signing-openapi/demo/) |
+| **CSC Spring mock server** | [csc-mock-server/](../csc-mock-server/) |
 | Keycloak SPI local run | [keycloak-pki-authenticator/demo/](../keycloak-pki-authenticator/demo/) |

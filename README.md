@@ -11,13 +11,14 @@ Public, **sanitized** samples for [Talha Bilal's portfolio](https://talha-bilal.
 | [**docs/**](./docs/) | **6 architecture diagrams** + **5 detailed use cases** |
 | [keycloak-pki-authenticator](./keycloak-pki-authenticator/) | Keycloak Authenticator SPI + **Docker demo** |
 | [csc-remote-signing-openapi](./csc-remote-signing-openapi/) | OpenAPI 3 spec + **curl/Postman demo** |
+| [csc-mock-server](./csc-mock-server/) | **Spring Boot** runnable CSC mock API |
 | [signing-platform-architecture](./signing-platform-architecture/) | Platform overview (links to full diagram set) |
 
 ## Start here
 
 1. **Diagrams** — [docs/diagrams/](./docs/diagrams/) (platform, CSC, Keycloak, HSM, PKI, deployment)
 2. **Use cases** — [docs/use-cases/](./docs/use-cases/) (CSC mobile signing, PDF workflow, multi-tenant CA, Java Card, IAM)
-3. **Run demos** — [CSC walkthrough](./csc-remote-signing-openapi/demo/) · [Keycloak SPI](./keycloak-pki-authenticator/demo/)
+3. **Run demos** — [CSC mock server](./csc-mock-server/) · [CSC curl demo](./csc-remote-signing-openapi/demo/) · [Keycloak SPI](./keycloak-pki-authenticator/demo/)
 
 ## Complex use cases (index)
 
@@ -39,6 +40,7 @@ Public, **sanitized** samples for [Talha Bilal's portfolio](https://talha-bilal.
 | PKCS#11 / HSM | [04-hsm-pkcs11-signing.md](./docs/diagrams/04-hsm-pkcs11-signing.md) |
 | PKI lifecycle | [05-pki-lifecycle.md](./docs/diagrams/05-pki-lifecycle.md) |
 | Deployment | [06-deployment-topology.md](./docs/diagrams/06-deployment-topology.md) |
+| Java Card lifecycle | [07-java-card-applet-lifecycle.md](./docs/diagrams/07-java-card-applet-lifecycle.md) |
 
 ## License
 

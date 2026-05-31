@@ -4,9 +4,17 @@ Hands-on **request/response examples** for the CSC-style API. Use against your o
 
 ## Prerequisites
 
-- Running CSC base URL (replace `BASE` below)
-- OAuth client credentials
+- Running CSC base URL (replace `BASE` below), **or** local mock: [csc-mock-server](../csc-mock-server/) → `http://localhost:8081/csc/v1`
+- OAuth client credentials (`demo-client` / `demo-secret` for mock)
 - `curl` or PowerShell
+
+### One-command demo against mock (Windows)
+
+```powershell
+# Terminal 1: start mock — cd ../csc-mock-server && mvn spring-boot:run
+# Terminal 2:
+./run-against-mock.ps1
+```
 
 ## Variables
 

@@ -41,9 +41,9 @@ sequenceDiagram
 | Host drivers | PC/SC on Windows/Linux; consistent APDU logging |
 | Backup keys | Policy: no export of private key — ever |
 
-## Sample reference
+## Diagrams
 
-- Architecture and ceremony flow in this document
-- Related platform context: [Platform overview](../diagrams/01-platform-overview.md)
+- [Java Card applet lifecycle](../diagrams/07-java-card-applet-lifecycle.md)
+- [Platform overview](../diagrams/01-platform-overview.md)
 
 > Production Java Card applet source is typically proprietary; this repo documents **flows, APDU patterns, and GP lifecycle** for interviews.
