@@ -1,14 +1,19 @@
-# Keycloak PKI Authenticator (Sample SPI)
+# Keycloak IAM Integration
 
-Minimal Keycloak **Authenticator SPI** for certificate-subject gating — portfolio / interview reference.
+**Portfolio project** — custom Keycloak SPI for certificate-aware authentication in a PKI/signing platform.
 
-## Documentation
+> **Full documentation (diagrams, use case, demo):** see **[PROJECT.md](./PROJECT.md)** below, or start here.
 
-| Resource | Link |
-|----------|------|
-| Login sequence diagram | [03-keycloak-pki-login.md](../docs/diagrams/03-keycloak-pki-login.md) |
-| Use case (enterprise console) | [02-keycloak-pki-authentication.md](../docs/use-cases/02-keycloak-pki-authentication.md) |
-| **Local Docker demo** | [demo/README.md](./demo/README.md) |
+## Quick links
+
+| Section | Document |
+|---------|----------|
+| Architecture & use case | [PROJECT.md](./PROJECT.md) |
+| Build & deploy SPI | This file → [Build](#build--deploy) |
+| Docker demo | [demo/README.md](./demo/README.md) |
+| Source | `src/main/java/...` |
+
+---
 
 ## Build & deploy
 
@@ -18,15 +23,10 @@ cp target/keycloak-pki-authenticator-sample.jar $KEYCLOAK_HOME/providers/
 $KEYCLOAK_HOME/bin/kc.sh build && $KEYCLOAK_HOME/bin/kc.sh start-dev
 ```
 
-## SPI classes
+## Demo behavior
 
-| Class | Role |
-|-------|------|
-| `CertificateSubjectAuthenticatorFactory` | Registers provider `demo-certificate-subject-gate` |
-| `CertificateSubjectAuthenticator` | Validates `X-Demo-Cert-Subject` header |
+Expects header `X-Demo-Cert-Subject` (portfolio sample only). See [demo/README.md](./demo/README.md).
 
-## Production extensions (not in sample)
+## License
 
-- Trust store validation + OCSP/CRL check on client cert
-- User Storage SPI mapping DN → tenant user
-- Protocol mappers for `tenant_id`, signing roles
+MIT — portfolio / learning use.

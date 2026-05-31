@@ -1,8 +1,8 @@
-# Signing & Trust Platform Architecture
+# Signing Platform (full stack)
 
-Entry point for platform architecture. **Full diagram set** lives under [docs/diagrams/](../docs/diagrams/).
+End-to-end **digital trust platform** — how PKI, CSC, Keycloak, HSM, and data services fit together.
 
-## Quick view
+## Platform diagram
 
 ```mermaid
 flowchart TB
@@ -15,16 +15,31 @@ flowchart TB
   p11 --> hsm[(HSM)]
 ```
 
-## Deep dives
+## Deployment topology
 
-| Topic | Document |
-|-------|----------|
-| Full platform map | [01-platform-overview.md](../docs/diagrams/01-platform-overview.md) |
-| CSC remote signing | [02-csc-remote-signing-sequence.md](../docs/diagrams/02-csc-remote-signing-sequence.md) |
-| Production deployment | [06-deployment-topology.md](../docs/diagrams/06-deployment-topology.md) |
-| All use cases | [docs/use-cases/](../docs/use-cases/) |
+```mermaid
+flowchart TB
+  internet[Internet] --> ingress[Ingress]
+  ingress --> apps[App tier]
+  apps --> crypto[Crypto tier]
+  apps --> data[(PostgreSQL / Redis)]
+  crypto --> hsm[(HSM)]
+```
 
-## Related code samples
+Full diagram set: [docs/diagrams/](../docs/diagrams/)
 
-- [Keycloak SPI](../keycloak-pki-authenticator/)
-- [CSC OpenAPI](../csc-remote-signing-openapi/)
+## Projects in this monorepo
+
+| Project | GitHub folder |
+|---------|---------------|
+| Keycloak IAM | [keycloak-pki-authenticator](../keycloak-pki-authenticator/) |
+| CSC remote signing | [csc-remote-signing-openapi](../csc-remote-signing-openapi/) |
+| PKI Server | [pki-server](../pki-server/) |
+| PKCS#11 HSM | [pkcs11-hsm-service](../pkcs11-hsm-service/) |
+| Java Card | [java-card-applets](../java-card-applets/) |
+
+## Use cases (all scenarios)
+
+[docs/use-cases/](../docs/use-cases/)
+
+MIT — portfolio reference.
