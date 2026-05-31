@@ -1,0 +1,245 @@
+openapi: 3.0.3
+info:
+  title: CSC Remote Signing API (Portfolio Sample)
+  description: |
+    Simplified Cloud Signature Consortium-style API for remote signing demonstrations.
+    Not affiliated with CSC; for education and architecture interviews only.
+  version: 1.0.0
+  contact:
+    name: Talha Bilal
+    url: https://talha-bilal.github.io/portfolio/
+
+servers:
+  - url: https://signing.example.com/csc/v1
+    description: Sample server
+
+tags:
+  - name: Info
+  - name: OAuth
+  - name: Credentials
+  - name: Signatures
+
+paths:
+  /info:
+    get:
+      tags: [Info]
+      summary: Service metadata
+      operationId: getServiceInfo
+      responses:
+        "200":
+          description: CSC service information
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServiceInfo"
+
+  /oauth2/token:
+    post:
+      tags: [OAuth]
+      summary: Obtain access token
+      operationId: oauthToken
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required: [grant_type, client_id, client_secret]
+              properties:
+                grant_type:
+                  type: string
+                  example: client_credentials
+                client_id:
+                  type: string
+                client_secret:
+                  type: string
+                scope:
+                  type: string
+                  example: service
+      responses:
+        "200":
+          description: Token response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenResponse"
+
+  /credentials/list:
+    post:
+      tags: [Credentials]
+      summary: List available signing credentials
+      operationId: credentialsList
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+      responses:
+        "200":
+          description: Credential list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CredentialList"
+
+  /credentials/authorize:
+    post:
+      tags: [Credentials]
+      summary: Authorize credential for signing
+      operationId: credentialsAuthorize
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthorizeRequest"
+      responses:
+        "200":
+          description: SAD / authorization handle
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthorizeResponse"
+
+  /signatures/signHash:
+    post:
+      tags: [Signatures]
+      summary: Sign hash remotely
+      operationId: signHash
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignHashRequest"
+      responses:
+        "200":
+          description: Signature value
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SignHashResponse"
+
+  /timestamps:
+    post:
+      tags: [Signatures]
+      summary: Request timestamp token
+      operationId: timestamp
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [hash]
+              properties:
+                hash:
+                  type: string
+                  description: Base64 hash
+                hashAlgorithm:
+                  type: string
+                  example: SHA-256
+      responses:
+        "200":
+          description: Timestamp token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  timestampToken:
+                    type: string
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    ServiceInfo:
+      type: object
+      properties:
+        spec:
+          type: string
+          example: "1.0"
+        name:
+          type: string
+          example: Portfolio CSC Sample
+        region:
+          type: string
+          example: EU
+
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+          example: Bearer
+        expires_in:
+          type: integer
+          example: 3600
+
+    CredentialList:
+      type: object
+      properties:
+        credentialIDs:
+          type: array
+          items:
+            type: string
+
+    AuthorizeRequest:
+      type: object
+      required: [credentialID, numSignatures]
+      properties:
+        credentialID:
+          type: string
+        numSignatures:
+          type: integer
+          minimum: 1
+        hashAlgorithm:
+          type: string
+          example: SHA-256
+
+    AuthorizeResponse:
+      type: object
+      properties:
+        SAD:
+          type: string
+          description: Signature Activation Data (sample)
+
+    SignHashRequest:
+      type: object
+      required: [credentialID, SAD, hash]
+      properties:
+        credentialID:
+          type: string
+        SAD:
+          type: string
+        hash:
+          type: string
+        signAlgo:
+          type: string
+          example: RSA_PKCS1_SHA256
+
+    SignHashResponse:
+      type: object
+      properties:
+        signature:
+          type: string
+        algorithm:
+          type: string
