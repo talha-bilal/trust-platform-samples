@@ -1,19 +1,33 @@
 # CSC Remote Signing API (OpenAPI Sample)
 
-Simplified [Cloud Signature Consortium](https://cloudsignatureconsortium.org/) style REST API for **remote signing** — suitable for portfolio review and client SDK generation.
-
-> Illustrative paths and schemas; align with your CSC provider version and credential profiles in production.
+Simplified [Cloud Signature Consortium](https://cloudsignatureconsortium.org/) style REST API.
 
 ## Contents
 
-- `openapi.yaml` — OpenAPI 3.0.3
-- Core flows: service info, OAuth token, credentials list, authorize, `signHash`, timestamps
+| Path | Description |
+|------|-------------|
+| [openapi.yaml](./openapi.yaml) | OpenAPI 3.0.3 — import to Swagger Editor |
+| [demo/](./demo/) | **Step-by-step demo**: curl, JSON payloads, Postman collection |
+| [../docs/diagrams/02-csc-remote-signing-sequence.md](../docs/diagrams/02-csc-remote-signing-sequence.md) | Sequence diagram |
+| [../docs/use-cases/01-csc-remote-signing.md](../docs/use-cases/01-csc-remote-signing.md) | Full use case narrative |
 
-## View spec
+## Endpoints (summary)
 
-- Paste `openapi.yaml` into [Swagger Editor](https://editor.swagger.io/)
-- Or: `npx @redocly/cli preview-docs openapi.yaml`
+| Method | Path | Purpose |
+|--------|------|---------|
+| GET | `/info` | Service metadata |
+| POST | `/oauth2/token` | OAuth2 token |
+| POST | `/credentials/list` | List signing credentials |
+| POST | `/credentials/authorize` | Obtain SAD |
+| POST | `/signatures/signHash` | Remote signature |
+| POST | `/timestamps` | RFC 3161 timestamp |
 
-## Related portfolio work
+## Quick start
 
-Production CSC services typically sit behind OAuth/OIDC (often Keycloak) and delegate crypto to PKCS#11 / HSM layers.
+```bash
+# View spec
+npx @redocly/cli preview-docs openapi.yaml
+
+# Run demo walkthrough
+cd demo && cat README.md
+```

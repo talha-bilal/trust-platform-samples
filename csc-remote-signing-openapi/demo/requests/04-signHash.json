@@ -1,0 +1,7 @@
+{
+  "credentialID": "cred-9f2a",
+  "SAD": "REPLACE_WITH_SAD_FROM_AUTHORIZE",
+  "hash": "dGVzdGhhc2gxMjM=",
+  "signAlgo": "RSA_PKCS1_SHA256",
+  "transactionId": "txn-8842-001"
+}

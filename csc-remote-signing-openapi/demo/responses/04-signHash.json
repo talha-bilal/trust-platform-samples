@@ -1,0 +1,5 @@
+{
+  "signature": "MEUCIQDxSampleBase64SignatureBytesOnlyForDocumentation",
+  "algorithm": "RSA_PKCS1_SHA256",
+  "credentialID": "cred-9f2a"
+}

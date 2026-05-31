@@ -1,0 +1,7 @@
+{
+  "spec": "1.0",
+  "name": "Portfolio CSC Sample",
+  "region": "EU",
+  "authType": "oauth2",
+  "signAlgorithms": ["RSA_PKCS1_SHA256", "ECDSA_SHA256"]
+}

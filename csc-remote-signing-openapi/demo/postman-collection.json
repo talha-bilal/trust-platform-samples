@@ -1,0 +1,92 @@
+{
+  "info": {
+    "name": "CSC Remote Signing (Sample)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://signing.example.com/csc/v1" },
+    { "key": "clientId", "value": "demo-client" },
+    { "key": "clientSecret", "value": "demo-secret" },
+    { "key": "accessToken", "value": "" },
+    { "key": "sad", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Info",
+      "request": { "method": "GET", "url": "{{baseUrl}}/info" }
+    },
+    {
+      "name": "OAuth token",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": ["var j = pm.response.json(); pm.collectionVariables.set('accessToken', j.access_token);"]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/x-www-form-urlencoded" }],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            { "key": "grant_type", "value": "client_credentials" },
+            { "key": "client_id", "value": "{{clientId}}" },
+            { "key": "client_secret", "value": "{{clientSecret}}" },
+            { "key": "scope", "value": "service" }
+          ]
+        },
+        "url": "{{baseUrl}}/oauth2/token"
+      }
+    },
+    {
+      "name": "Credentials list",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"userId\": \"user-7c21\"\n}" },
+        "url": "{{baseUrl}}/credentials/list"
+      }
+    },
+    {
+      "name": "Authorize",
+      "event": [
+        {
+          "listen": "test",
+          "script": { "exec": ["var j = pm.response.json(); pm.collectionVariables.set('sad', j.SAD);"] }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"credentialID\": \"cred-9f2a\",\n  \"numSignatures\": 1,\n  \"hashAlgorithm\": \"SHA-256\"\n}"
+        },
+        "url": "{{baseUrl}}/credentials/authorize"
+      }
+    },
+    {
+      "name": "Sign hash",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"credentialID\": \"cred-9f2a\",\n  \"SAD\": \"{{sad}}\",\n  \"hash\": \"dGVzdGhhc2gxMjM=\",\n  \"signAlgo\": \"RSA_PKCS1_SHA256\"\n}"
+        },
+        "url": "{{baseUrl}}/signatures/signHash"
+      }
+    }
+  ]
+}

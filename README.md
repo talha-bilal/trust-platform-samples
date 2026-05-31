@@ -1,15 +1,44 @@
 # Trust Platform Engineering Samples
 
-Public, **sanitized** samples supporting [Talha Bilal's portfolio](https://talha-bilal.github.io/portfolio/).  
-Not production code — for interviews, architecture discussion, and SPI/OpenAPI reference.
+Public, **sanitized** samples for [Talha Bilal's portfolio](https://talha-bilal.github.io/portfolio/) — PKI, CSC remote signing, Keycloak SPI, HSM, and Java Card architecture.
 
-> **Portfolio link 404?** In GitHub: **Settings → General → Visibility → Public** (private repos return 404 to visitors).
+> Portfolio samples — not production deployments. Safe for interviews and design reviews.
 
-| Sample | Description |
-|--------|-------------|
-| [keycloak-pki-authenticator](./keycloak-pki-authenticator/) | Keycloak **Authenticator SPI** sketch (certificate-subject gate) |
-| [csc-remote-signing-openapi](./csc-remote-signing-openapi/) | **CSC-style** remote signing REST API (OpenAPI 3) |
-| [signing-platform-architecture](./signing-platform-architecture/) | Reference **architecture** (PKI, CSC, HSM, Keycloak) |
+## Repository map
+
+| Area | Description |
+|------|-------------|
+| [**docs/**](./docs/) | **6 architecture diagrams** + **5 detailed use cases** |
+| [keycloak-pki-authenticator](./keycloak-pki-authenticator/) | Keycloak Authenticator SPI + **Docker demo** |
+| [csc-remote-signing-openapi](./csc-remote-signing-openapi/) | OpenAPI 3 spec + **curl/Postman demo** |
+| [signing-platform-architecture](./signing-platform-architecture/) | Platform overview (links to full diagram set) |
+
+## Start here
+
+1. **Diagrams** — [docs/diagrams/](./docs/diagrams/) (platform, CSC, Keycloak, HSM, PKI, deployment)
+2. **Use cases** — [docs/use-cases/](./docs/use-cases/) (CSC mobile signing, PDF workflow, multi-tenant CA, Java Card, IAM)
+3. **Run demos** — [CSC walkthrough](./csc-remote-signing-openapi/demo/) · [Keycloak SPI](./keycloak-pki-authenticator/demo/)
+
+## Complex use cases (index)
+
+| # | Title | Doc |
+|---|-------|-----|
+| 1 | CSC remote signing for mobile/web | [01-csc-remote-signing.md](./docs/use-cases/01-csc-remote-signing.md) |
+| 2 | Keycloak + PKI custom SPI | [02-keycloak-pki-authentication.md](./docs/use-cases/02-keycloak-pki-authentication.md) |
+| 3 | PDF workflow + HSM | [03-pdf-workflow-hsm-signing.md](./docs/use-cases/03-pdf-workflow-hsm-signing.md) |
+| 4 | Multi-tenant PKI / CA | [04-multi-tenant-pki.md](./docs/use-cases/04-multi-tenant-pki.md) |
+| 5 | Java Card issuance ceremony | [05-java-card-issuance.md](./docs/use-cases/05-java-card-issuance.md) |
+
+## Diagram gallery
+
+| Diagram | File |
+|---------|------|
+| Platform overview | [01-platform-overview.md](./docs/diagrams/01-platform-overview.md) |
+| CSC sequence | [02-csc-remote-signing-sequence.md](./docs/diagrams/02-csc-remote-signing-sequence.md) |
+| Keycloak + PKI | [03-keycloak-pki-login.md](./docs/diagrams/03-keycloak-pki-login.md) |
+| PKCS#11 / HSM | [04-hsm-pkcs11-signing.md](./docs/diagrams/04-hsm-pkcs11-signing.md) |
+| PKI lifecycle | [05-pki-lifecycle.md](./docs/diagrams/05-pki-lifecycle.md) |
+| Deployment | [06-deployment-topology.md](./docs/diagrams/06-deployment-topology.md) |
 
 ## License
 

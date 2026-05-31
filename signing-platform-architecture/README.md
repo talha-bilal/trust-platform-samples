@@ -1,97 +1,30 @@
-# Signing & Trust Platform Architecture (Reference)
+# Signing & Trust Platform Architecture
 
-Reference architecture for **PKI**, **CSC remote signing**, **HSM**, and **Keycloak IAM** — aligned with [Talha Bilal's portfolio](https://talha-bilal.github.io/portfolio/).
+Entry point for platform architecture. **Full diagram set** lives under [docs/diagrams/](../docs/diagrams/).
+
+## Quick view
 
 ```mermaid
 flowchart TB
-  subgraph clients [Clients]
-    Web[Web apps]
-    Mobile[Mobile SDKs]
-    Partners[Partner integrations]
-  end
-
-  subgraph edge [Edge]
-    GW[API Gateway / mTLS]
-  end
-
-  subgraph iam [Identity]
-    KC[Keycloak OIDC]
-    SPI[Custom SPIs]
-    KC --- SPI
-  end
-
-  subgraph signing [Signing plane]
-    CSC[CSC API service]
-    PDF[PDF / workflow]
-    SMIME[S/MIME service]
-    TSA[TSA RFC 3161]
-  end
-
-  subgraph crypto [Crypto plane]
-    CC[Crypto-Core]
-    P11[PKCS#11 service]
-    HSM[(AWS CloudHSM / Utimaco / SoftHSM2)]
-  end
-
-  subgraph pki [PKI plane]
-    CA[CA / lifecycle]
-    OCSP[OCSP / CRL]
-  end
-
-  subgraph data [Data]
-    DB[(PostgreSQL)]
-    MQ[RabbitMQ]
-    Redis[(Redis)]
-  end
-
-  clients --> GW
-  GW --> KC
-  GW --> CSC
-  GW --> PDF
-  KC --> SPI
-  CSC --> P11
-  PDF --> P11
-  SMIME --> P11
-  CC --> P11
-  P11 --> HSM
-  CA --> P11
-  CA --> OCSP
-  CSC --> TSA
-  signing --> DB
-  signing --> MQ
-  signing --> Redis
-  pki --> DB
+  clients[Clients] --> gw[API Gateway]
+  gw --> iam[Keycloak + SPI]
+  gw --> csc[CSC API]
+  gw --> pki[PKI / CA]
+  csc --> p11[PKCS#11]
+  pki --> p11
+  p11 --> hsm[(HSM)]
 ```
 
-## Service responsibilities
+## Deep dives
 
-| Component | Role |
-|-----------|------|
-| **Keycloak** | SSO/OIDC, tenant realms, custom SPIs for certificate-aware login |
-| **CSC API** | Standard remote signing for apps (`credentials`, `signHash`, timestamps) |
-| **PKCS#11 layer** | Vendor-neutral HSM access, pooled sessions, RBAC |
-| **PKI / CA** | Issuance, renewal, OCSP/CRL, policy per tenant |
-| **Crypto-Core** | Shared key generation, CSR, encrypt/decrypt |
-| **Java Card** | Edge credentials & secure elements (issuance ceremonies) |
+| Topic | Document |
+|-------|----------|
+| Full platform map | [01-platform-overview.md](../docs/diagrams/01-platform-overview.md) |
+| CSC remote signing | [02-csc-remote-signing-sequence.md](../docs/diagrams/02-csc-remote-signing-sequence.md) |
+| Production deployment | [06-deployment-topology.md](../docs/diagrams/06-deployment-topology.md) |
+| All use cases | [docs/use-cases/](../docs/use-cases/) |
 
-## Typical remote signing path
+## Related code samples
 
-1. Client obtains OAuth token (Keycloak or CSC client credentials).
-2. CSC `credentials/list` + `authorize` → Signature Activation Data (SAD).
-3. Client sends hash to `signatures/signHash`.
-4. CSC service uses PKCS#11 → HSM for signature generation.
-5. Optional RFC 3161 timestamp from TSA service.
-6. Audit event persisted per tenant.
-
-## Security controls (production)
-
-- mTLS or gateway-terminated client certificates
-- Per-tenant realm isolation and HSM key partitioning
-- Immutable audit logs for signing and IAM events
-- Rate limits on CSC authorize/sign endpoints
-- No private keys outside HSM except Java Card secure elements
-
-## Samples in this repository
-
-- [Keycloak Authenticator SPI](../keycloak-pki-authenticator/)
+- [Keycloak SPI](../keycloak-pki-authenticator/)
 - [CSC OpenAPI](../csc-remote-signing-openapi/)
