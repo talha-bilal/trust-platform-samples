@@ -3,6 +3,8 @@
 Public, **sanitized** samples supporting [Talha Bilal's portfolio](https://talha-bilal.github.io/portfolio/).  
 Not production code — for interviews, architecture discussion, and SPI/OpenAPI reference.
 
+> **Portfolio link 404?** In GitHub: **Settings → General → Visibility → Public** (private repos return 404 to visitors).
+
 | Sample | Description |
 |--------|-------------|
 | [keycloak-pki-authenticator](./keycloak-pki-authenticator/) | Keycloak **Authenticator SPI** sketch (certificate-subject gate) |
