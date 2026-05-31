@@ -1,28 +1,24 @@
 # Reference frontend (local only — do not commit)
 
-Drop a **copy** of frontend files here so portfolio docs can be aligned with the real product flow.
+Architecture docs are refreshed from an **external read-only folder** on this machine:
 
-## What to copy
+`D:\products\public`
 
-Enough to infer architecture (routes, modules, API clients, feature areas):
+Copying files into this directory is optional. The agent reads `D:\products\public` directly when updating diagrams and use cases.
 
-- `src/` (or `app/`) — pages, routes, layouts, services
-- `package.json` — dependencies only (no private registry tokens)
-- Optional: env **example** files with keys renamed (no real URLs/secrets)
+## What we infer (never published verbatim)
 
-## What to omit
+- Route map and user journeys (upload → signers → prepare → editor)
+- API service boundaries under `src/api/services/`
+- Organization modules and signature policy flags
+- Auth flows: OIDC, guest links, CSC callback, smart-card, passkey
 
-- `.env`, credentials, API keys, internal hostnames
-- Company/product branding assets if identifiable
-- Customer names, tenant IDs, production config
-- Anything under NDA you are not allowed to export
+## Sanitization rules
 
-## After you drop files
+- No company, product, or customer names in GitHub docs
+- Generic labels only: **Signing Portal**, **Document API**, **Identity provider**, etc.
+- No `.env`, keys, or internal hostnames
 
-Tell the agent: **“reference frontend is ready”**. It will:
+## After updates
 
-1. Read structure and flows from this folder
-2. Update `signing-platform-architecture/`, `docs/diagrams/`, `docs/use-cases/`, and project READMEs
-3. Use **generic names** only (e.g. “Admin Portal”, “Tenant Console”, “Signing API”)
-4. **Never** copy proprietary strings into GitHub
-5. Delete or leave this folder local — it stays gitignored
+Only **documentation** in `trust-platform-samples` is committed — not `D:\products\public`.

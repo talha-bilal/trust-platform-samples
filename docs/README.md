@@ -13,6 +13,7 @@ Deep-dive material for trust platform engineering: **diagrams**, **use cases**, 
 | [diagrams/05-pki-lifecycle.md](./diagrams/05-pki-lifecycle.md) | CA, OCSP/CRL, renewal |
 | [diagrams/06-deployment-topology.md](./diagrams/06-deployment-topology.md) | Runtime deployment view |
 | [diagrams/07-java-card-applet-lifecycle.md](./diagrams/07-java-card-applet-lifecycle.md) | Java Card / GlobalPlatform lifecycle |
+| [diagrams/08-signing-portal-flows.md](./diagrams/08-signing-portal-flows.md) | Signing Portal routes, RBAC, guest/CSC/embed |
 
 ## Complex use cases
 
@@ -23,6 +24,7 @@ Deep-dive material for trust platform engineering: **diagrams**, **use cases**, 
 | 3 | HSM-backed PDF workflow signing | [use-cases/03-pdf-workflow-hsm-signing.md](./use-cases/03-pdf-workflow-hsm-signing.md) |
 | 4 | Multi-tenant CA issuance & OCSP | [use-cases/04-multi-tenant-pki.md](./use-cases/04-multi-tenant-pki.md) |
 | 5 | Java Card issuance ceremony | [use-cases/05-java-card-issuance.md](./use-cases/05-java-card-issuance.md) |
+| 6 | Multi-tenant document signing workspace | [use-cases/06-document-signing-workspace.md](./use-cases/06-document-signing-workspace.md) |
 
 ## Runnable demos
 

@@ -12,7 +12,7 @@ Each **project folder** is a self-contained GitHub page: diagrams, use cases, an
 | **PKI Server** | [pki-server](./pki-server/) | CA/OCSP/CRL diagrams, multi-tenant use case |
 | **PKCS#11 HSM Service** | [pkcs11-hsm-service](./pkcs11-hsm-service/) | HSM pooling, signing sequence diagrams |
 | **Java Card Applets** | [java-card-applets](./java-card-applets/) | GP lifecycle, issuance ceremony diagrams |
-| **Signing Platform (full stack)** | [signing-platform-architecture](./signing-platform-architecture/) | Platform + deployment overview |
+| **Signing Platform (full stack)** | [signing-platform-architecture](./signing-platform-architecture/) | Portal SPA flows, RBAC, guest/CSC paths, full-stack map |
 
 Click a project folder on GitHub — **README / PROJECT.md** is the detailed entry point.
 

@@ -17,8 +17,8 @@ flowchart TB
   end
 
   subgraph apps [Application plane]
-    AdminUI[Admin console]
-    SignAPI[Signing APIs]
+    Portal[Signing Portal SPA]
+    SignAPI[Document & workflow APIs]
     CSC[CSC service]
     PKI[PKI / CA API]
   end
@@ -47,13 +47,13 @@ flowchart TB
   Admins --> LB
   LB --> GW
   GW --> MTLS
-  MTLS --> AdminUI
+  MTLS --> Portal
   MTLS --> SignAPI
   MTLS --> CSC
   MTLS --> PKI
   SignAPI --> KC
   CSC --> KC
-  AdminUI --> KC
+  Portal --> KC
   KC --> SPI
   CSC --> P11
   PKI --> P11
@@ -73,7 +73,7 @@ flowchart TB
 |-------|----------------|
 | Edge | TLS, rate limits, tenant routing, optional client certificates |
 | Identity | OIDC tokens, realms, SPI extensions for PKI-backed users |
-| Signing | CSC, PDF/S/MIME pipelines, workflow state machines |
+| Signing | Portal UX, CSC, PDF workflows, editor/field APIs, state machines |
 | Crypto | HSM sessions, key handles, algorithm policy enforcement |
 | PKI | Issuance, revocation, OCSP/CRL, certificate profiles |
 | Data | Tenant metadata, audit, async jobs, cache |
