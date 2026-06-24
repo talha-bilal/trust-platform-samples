@@ -18,6 +18,11 @@ Runnable lab that mirrors a **typical integrator client ask**:
 
 Full presenter script: **[DEMO-WALKTHROUGH.md](./DEMO-WALKTHROUGH.md)**
 
+**Detailed PDF guide (AD + OIDC flows):** [docs/IAM-OIDC-AD-Flow.pdf](./docs/IAM-OIDC-AD-Flow.pdf)  
+Markdown source: [docs/IAM-OIDC-AD-Flow.md](./docs/IAM-OIDC-AD-Flow.md)
+
+Regenerate PDF: `pip install -r requirements-docs.txt` then `python scripts/generate_flow_pdf.py`
+
 ## Architecture
 
 ```mermaid

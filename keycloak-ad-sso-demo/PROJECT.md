@@ -32,6 +32,7 @@ sequenceDiagram
 
 | Asset | Link |
 |-------|------|
+| **PDF guide (AD + OIDC)** | [docs/IAM-OIDC-AD-Flow.pdf](./docs/IAM-OIDC-AD-Flow.pdf) |
 | Local demo | [README — Quick start](./README.md#quick-start-windows) |
 | Presenter script | [DEMO-WALKTHROUGH.md](./DEMO-WALKTHROUGH.md) |
 | Compose stack | [docker-compose.yml](./docker-compose.yml) |
