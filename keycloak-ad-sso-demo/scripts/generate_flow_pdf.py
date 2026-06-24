@@ -10,8 +10,19 @@ except ImportError:
     raise SystemExit("Run: pip install fpdf2>=2.7.0")
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "docs" / "IAM-OIDC-AD-Flow.md"
-OUTPUT = ROOT / "docs" / "IAM-OIDC-AD-Flow.pdf"
+DEFAULT_SOURCE = ROOT / "docs" / "IAM-OIDC-AD-Flow.md"
+
+
+def resolve_paths() -> tuple[Path, Path]:
+    import sys
+
+    if len(sys.argv) > 1:
+        source = Path(sys.argv[1])
+        if not source.is_absolute():
+            source = ROOT / source
+    else:
+        source = DEFAULT_SOURCE
+    return source, source.with_suffix(".pdf")
 
 
 def ascii_safe(text: str) -> str:
@@ -101,6 +112,14 @@ def render_markdown(pdf: DocPDF, text: str) -> None:
             pdf.ln(2)
             continue
 
+        if line.startswith("#### "):
+            pdf.ln(1)
+            pdf.set_font("Helvetica", "B", 10)
+            pdf.set_x(pdf.l_margin)
+            pdf.multi_cell(w(), 5, ascii_safe(line[5:].strip()))
+            pdf.ln(1)
+            continue
+
         if line.startswith("### "):
             pdf.ln(2)
             pdf.set_font("Helvetica", "B", 11)
@@ -132,10 +151,11 @@ def render_markdown(pdf: DocPDF, text: str) -> None:
 
 
 def main() -> None:
-    if not SOURCE.exists():
-        raise SystemExit(f"Missing source: {SOURCE}")
+    source, output = resolve_paths()
+    if not source.exists():
+        raise SystemExit(f"Missing source: {source}")
 
-    body = SOURCE.read_text(encoding="utf-8")
+    body = source.read_text(encoding="utf-8")
     # Skip YAML-style title block before first # if needed; file starts with #
     pdf = DocPDF()
     pdf.set_auto_page_break(auto=True, margin=14)
@@ -144,15 +164,16 @@ def main() -> None:
 
     pdf.set_font("Helvetica", "", 9)
     pdf.set_text_color(80, 80, 80)
-    pdf.cell(0, 5, ascii_safe("Talha Bilal - Portfolio technical guide"), new_x="LMARGIN", new_y="NEXT")
+    subtitle = "SecureLink customer proposal" if "SecureLink" in source.name else "Talha Bilal - Portfolio technical guide"
+    pdf.cell(0, 5, ascii_safe(subtitle), new_x="LMARGIN", new_y="NEXT")
     pdf.set_text_color(0, 0, 0)
     pdf.ln(2)
 
     render_markdown(pdf, body)
 
-    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
-    pdf.output(str(OUTPUT))
-    print(f"Wrote {OUTPUT}")
+    output.parent.mkdir(parents=True, exist_ok=True)
+    pdf.output(str(output))
+    print(f"Wrote {output}")
 
 
 if __name__ == "__main__":
