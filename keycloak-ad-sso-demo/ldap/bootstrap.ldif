@@ -1,0 +1,38 @@
+# Demo directory — same LDAP federation pattern as Active Directory in production
+
+dn: ou=users,dc=company,dc=local
+objectClass: organizationalUnit
+ou: users
+
+dn: ou=groups,dc=company,dc=local
+objectClass: organizationalUnit
+ou: groups
+
+dn: uid=ahmed,ou=users,dc=company,dc=local
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+cn: Ahmed Ali
+sn: Ali
+uid: ahmed
+mail: ahmed@company.local
+userPassword: Demo@123
+
+dn: uid=sara,ou=users,dc=company,dc=local
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+cn: Sara Khan
+sn: Khan
+uid: sara
+mail: sara@company.local
+userPassword: Demo@123
+
+dn: cn=employees,ou=groups,dc=company,dc=local
+objectClass: groupOfNames
+cn: employees
+member: uid=ahmed,ou=users,dc=company,dc=local
+member: uid=sara,ou=users,dc=company,dc=local
+
+dn: cn=hr-team,ou=groups,dc=company,dc=local
+objectClass: groupOfNames
+cn: hr-team
+member: uid=sara,ou=users,dc=company,dc=local

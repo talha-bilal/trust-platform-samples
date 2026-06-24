@@ -25,6 +25,7 @@ Deep-dive material for trust platform engineering: **diagrams**, **use cases**, 
 | 4 | Multi-tenant CA issuance & OCSP | [use-cases/04-multi-tenant-pki.md](./use-cases/04-multi-tenant-pki.md) |
 | 5 | Java Card issuance ceremony | [use-cases/05-java-card-issuance.md](./use-cases/05-java-card-issuance.md) |
 | 6 | Multi-tenant document signing workspace | [use-cases/06-document-signing-workspace.md](./use-cases/06-document-signing-workspace.md) |
+| 7 | On-prem Keycloak, AD & OIDC SSO (client deployment) | [use-cases/07-keycloak-ad-sso-deployment.md](./use-cases/07-keycloak-ad-sso-deployment.md) |
 
 ## Runnable demos
 
@@ -33,3 +34,4 @@ Deep-dive material for trust platform engineering: **diagrams**, **use cases**, 
 | CSC API walkthrough (curl + JSON) | [csc-remote-signing-openapi/demo/](../csc-remote-signing-openapi/demo/) |
 | **CSC Spring mock server** | [csc-mock-server/](../csc-mock-server/) |
 | Keycloak SPI local run | [keycloak-pki-authenticator/demo/](../keycloak-pki-authenticator/demo/) |
+| **Keycloak AD + SSO client lab** | [keycloak-ad-sso-demo/](../keycloak-ad-sso-demo/) |

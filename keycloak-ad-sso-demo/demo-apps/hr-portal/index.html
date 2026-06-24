@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HR Portal — SSO Demo</title>
+    <script src="https://cdn.jsdelivr.net/npm/keycloak-js@24.0.5/dist/keycloak.min.js"></script>
+    <style>
+      :root {
+        font-family: system-ui, sans-serif;
+        color: #0f172a;
+        background: #f1f5f9;
+      }
+      body {
+        max-width: 720px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+      .card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+      }
+      .badge {
+        display: inline-block;
+        background: #0d9488;
+        color: #fff;
+        font-size: 0.75rem;
+        padding: 0.2rem 0.6rem;
+        border-radius: 999px;
+      }
+      pre {
+        background: #0f172a;
+        color: #e2e8f0;
+        padding: 1rem;
+        border-radius: 8px;
+        overflow: auto;
+        font-size: 0.8rem;
+      }
+      a {
+        color: #0d9488;
+      }
+      button {
+        background: #0d9488;
+        color: #fff;
+        border: 0;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <span class="badge">Application 1</span>
+      <h1>HR Portal</h1>
+      <p>Internal app protected by <strong>Keycloak OIDC</strong>. Users authenticate via the company directory (demo LDAP = AD pattern).</p>
+      <p id="status">Initializing SSO…</p>
+      <p><a href="http://localhost:3002/" target="_blank" rel="noreferrer">Open Finance Portal →</a> (SSO: no second login if session exists)</p>
+      <button id="logout" hidden>Logout</button>
+      <h2>Token claims</h2>
+      <pre id="claims">—</pre>
+    </div>
+    <script>
+      const keycloak = new Keycloak({
+        url: "http://localhost:8080",
+        realm: "company",
+        clientId: "hr-portal",
+      });
+
+      keycloak
+        .init({ onLoad: "login-required", pkceMethod: "S256", checkLoginIframe: false })
+        .then((authenticated) => {
+          document.getElementById("status").textContent = authenticated
+            ? "Signed in as " + (keycloak.tokenParsed.preferred_username || keycloak.tokenParsed.sub)
+            : "Not authenticated";
+          document.getElementById("claims").textContent = JSON.stringify(keycloak.tokenParsed, null, 2);
+          document.getElementById("logout").hidden = !authenticated;
+        })
+        .catch((err) => {
+          document.getElementById("status").textContent = "SSO error — is Keycloak running? Run setup/configure-ldap.ps1";
+          document.getElementById("claims").textContent = String(err);
+        });
+
+      document.getElementById("logout").addEventListener("click", () => keycloak.logout({ redirectUri: window.location.origin + "/" }));
+    </script>
+  </body>
+</html>

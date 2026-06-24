@@ -7,6 +7,7 @@ Each **project folder** is a self-contained GitHub page: diagrams, use cases, an
 
 | Project | Folder | What's inside |
 |---------|--------|---------------|
+| **Keycloak AD & SSO Demo** | [keycloak-ad-sso-demo](./keycloak-ad-sso-demo/) | **Client presentation lab** — on-prem Keycloak, LDAP/AD federation, two OIDC apps, [walkthrough](./keycloak-ad-sso-demo/DEMO-WALKTHROUGH.md) |
 | **Keycloak IAM Integration** | [keycloak-pki-authenticator](./keycloak-pki-authenticator/) | SPI source, [PROJECT.md](./keycloak-pki-authenticator/PROJECT.md), Docker demo |
 | **CSC Remote Signing Service** | [csc-remote-signing-openapi](./csc-remote-signing-openapi/) | OpenAPI, [PROJECT.md](./csc-remote-signing-openapi/PROJECT.md), [mock server](./csc-mock-server/), demos |
 | **PKI Server** | [pki-server](./pki-server/) | CA/OCSP/CRL diagrams, multi-tenant use case |

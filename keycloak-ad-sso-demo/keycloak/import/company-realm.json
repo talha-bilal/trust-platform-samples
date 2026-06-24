@@ -1,0 +1,41 @@
+{
+  "realm": "company",
+  "enabled": true,
+  "displayName": "Demo Company IAM",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": false,
+  "editUsernameAllowed": false,
+  "sslRequired": "none",
+  "clients": [
+    {
+      "clientId": "hr-portal",
+      "name": "HR Portal",
+      "enabled": true,
+      "publicClient": true,
+      "protocol": "openid-connect",
+      "redirectUris": ["http://localhost:3001/*"],
+      "webOrigins": ["http://localhost:3001", "+"],
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "attributes": {
+        "pkce.code.challenge.method": "S256"
+      }
+    },
+    {
+      "clientId": "finance-portal",
+      "name": "Finance Portal",
+      "enabled": true,
+      "publicClient": true,
+      "protocol": "openid-connect",
+      "redirectUris": ["http://localhost:3002/*"],
+      "webOrigins": ["http://localhost:3002", "+"],
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "attributes": {
+        "pkce.code.challenge.method": "S256"
+      }
+    }
+  ]
+}
