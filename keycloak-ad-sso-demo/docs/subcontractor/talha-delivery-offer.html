@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Implementation Plan &amp; Commercial Offer | Talha Bilal → SecureLink Arabia</title>
+  <style>
+    @page { size: A4; margin: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Segoe UI", system-ui, sans-serif; color: #1e293b; font-size: 10.5pt; line-height: 1.55; }
+    .page { width: 210mm; min-height: 297mm; padding: 18mm 20mm 22mm; page-break-after: always; position: relative; }
+    .page:last-child { page-break-after: auto; }
+    .page-footer {
+      position: absolute; bottom: 12mm; left: 20mm; right: 20mm;
+      border-top: 1px solid #e2e8f0; padding-top: 6px; font-size: 8pt; color: #64748b;
+      display: flex; justify-content: space-between;
+    }
+    .cover {
+      background: linear-gradient(135deg, #134e4a 0%, #0f172a 50%, #1e3a5f 100%);
+      color: #fff; padding: 0; display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .cover-top { padding: 22mm 20mm 0; }
+    .cover-to { font-size: 10pt; color: #5eead4; margin-bottom: 6mm; }
+    .cover h1 { font-size: 24pt; font-weight: 700; line-height: 1.2; margin-bottom: 8mm; }
+    .cover .subtitle { font-size: 12pt; color: #cbd5e1; max-width: 155mm; }
+    .cover-meta {
+      background: rgba(255,255,255,0.07); border-top: 1px solid rgba(255,255,255,0.12);
+      padding: 14mm 20mm; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px; font-size: 9.5pt;
+    }
+    .cover-meta dt { color: #94a3b8; font-size: 8pt; text-transform: uppercase; letter-spacing: 0.05em; }
+    .cover-meta dd { color: #f1f5f9; font-weight: 500; }
+    h2 { font-size: 15pt; color: #134e4a; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 3px solid #14b8a6; }
+    h3 { font-size: 11pt; color: #0f766e; margin: 12px 0 6px; }
+    p { margin-bottom: 8px; }
+    ul { margin: 6px 0 10px 18px; } li { margin-bottom: 4px; }
+    .lead {
+      font-size: 10.5pt; color: #475569; background: #f0fdfa; border-left: 4px solid #14b8a6;
+      padding: 12px 14px; margin-bottom: 12px; border-radius: 0 8px 8px 0;
+    }
+    .callout {
+      background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px; padding: 12px 14px; margin: 12px 0; font-size: 9.5pt;
+    }
+    table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 9.5pt; }
+    th { background: #134e4a; color: #fff; text-align: left; padding: 8px 10px; }
+    td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+    tr:nth-child(even) td { background: #f8fafc; }
+    .diagram-wrap {
+      background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px; margin: 10px 0; text-align: center;
+    }
+    .diagram-caption { font-size: 8.5pt; color: #64748b; margin-top: 6px; text-align: left; }
+    .phase-row { display: grid; grid-template-columns: 28px 1fr; gap: 10px; margin-bottom: 10px; align-items: start; }
+    .phase-num {
+      width: 28px; height: 28px; background: #14b8a6; color: #fff; border-radius: 50%;
+      font-size: 11pt; font-weight: 700; text-align: center; line-height: 28px;
+    }
+    .phase-body { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 12px; }
+    .phase-body h4 { margin: 0 0 4px; font-size: 10pt; color: #134e4a; }
+    .phase-body p, .phase-body ul { margin: 0; font-size: 9pt; }
+    .price-box {
+      background: linear-gradient(135deg, #134e4a, #0f766e); color: #fff; border-radius: 12px;
+      padding: 18px 20px; margin: 14px 0; display: flex; justify-content: space-between; align-items: center;
+    }
+    .price-box .amt { font-size: 24pt; font-weight: 700; }
+    .sign-box { border: 1px solid #cbd5e1; border-radius: 10px; padding: 16px; margin-top: 16px; min-height: 100px; }
+    .sign-line { border-bottom: 1px solid #94a3b8; margin: 20px 0 8px; }
+    .tag { display: inline-block; background: #ccfbf1; color: #0f766e; font-size: 8pt; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+<!-- COVER -->
+<section class="page cover">
+  <div class="cover-top">
+    <div class="cover-to">To: SecureLink Arabia &nbsp;|&nbsp; Re: Keycloak on-prem IAM delivery partner</div>
+    <h1>Implementation Plan &amp;<br/>Commercial Offer</h1>
+    <p class="subtitle">How I will deliver the 250–300 user Keycloak platform — Active Directory, MFA, and application SSO — aligned to your customer approval scope.</p>
+  </div>
+  <dl class="cover-meta">
+    <div><dt>Submitted by</dt><dd>Talha Bilal</dd></div>
+    <div><dt>Role</dt><dd>Senior Keycloak / IAM engineer (remote)</dd></div>
+    <div><dt>Customer context</dt><dd>250–300 users · on-prem KSA · up to 8 apps</dd></div>
+    <div><dt>Delivery window</dt><dd>4–6 weeks (with your customer)</dd></div>
+    <div><dt>My fixed offer</dt><dd>SAR 76,000 (excl. VAT)</dd></div>
+    <div><dt>Contact</dt><dd>talha.at43@gmail.com</dd></div>
+    <div><dt>Portfolio</dt><dd>talha-bilal.github.io/portfolio</dd></div>
+    <div><dt>Date</dt><dd>June 2026</dd></div>
+  </dl>
+</section>
+
+<!-- PURPOSE -->
+<section class="page">
+  <h2>1. Purpose of this document</h2>
+  <p class="lead">
+    SecureLink holds the <strong>customer relationship and commercial contract</strong> with the end client. This document is <strong>my plan and my price</strong> to you as <strong>technical delivery partner</strong> — how I will implement the approved scope and what you pay me for that work.
+  </p>
+  <div class="callout">
+    <strong>Not a customer-facing proposal.</strong> Your team shares the customer approval scope with the end client. I share this document with <strong>SecureLink only</strong> so you can evaluate delivery approach, timeline, and subcontractor cost before you engage me.
+  </div>
+  <h3>What I understand you need from me</h3>
+  <table>
+    <tr><th>Your customer needs (from scope doc)</th><th>What I deliver to you</th></tr>
+    <tr><td>On-prem Keycloak + PostgreSQL</td><td>Deployed, hardened, documented platform</td></tr>
+    <tr><td>Active Directory / LDAPS integration</td><td>Federation, sync, group mapping, tested auth</td></tr>
+    <tr><td>MFA (authenticator OTP)</td><td>Policy, enrollment flow, admin procedures</td></tr>
+    <tr><td>SSO for up to 8 applications</td><td>OIDC and SAML client configuration per app</td></tr>
+    <tr><td>4–6 week delivery</td><td>Phased execution with you and app owners</td></tr>
+    <tr><td>Handover &amp; documentation</td><td>Admin guide, backup/restore, KT session</td></tr>
+  </table>
+  <h3>How we work together</h3>
+  <ul>
+    <li><strong>SecureLink</strong> — customer PM, commercial, access coordination, UAT scheduling with app owners</li>
+    <li><strong>Talha Bilal</strong> — hands-on Keycloak engineering, AD federation, MFA, app SSO configuration, technical docs</li>
+    <li><strong>Customer IT</strong> — VMs, AD service account, DNS/TLS, firewall (via your coordination)</li>
+  </ul>
+  <div class="page-footer"><span>Talha Bilal — SecureLink delivery offer</span><span>Page 2</span></div>
+</section>
+
+<!-- APPROACH -->
+<section class="page">
+  <h2>2. My technical approach</h2>
+  <p>I operate on-prem Keycloak in production today (Dictalabs): AD/LDAP federation, OIDC application SSO, realm lifecycle, and custom SPI where required. The customer engagement follows the same proven pattern.</p>
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 580 260" width="100%" style="max-width:540px" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ar" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#14b8a6"/></marker></defs>
+      <rect x="220" y="8" width="140" height="36" rx="6" fill="#e0f2fe" stroke="#0369a1"/>
+      <text x="290" y="30" text-anchor="middle" font-size="11" font-weight="600" fill="#0c4a6e">250-300 Users</text>
+      <line x1="290" y1="44" x2="290" y2="58" stroke="#14b8a6" stroke-width="2" marker-end="url(#ar)"/>
+      <rect x="200" y="60" width="180" height="34" rx="6" fill="#f1f5f9" stroke="#94a3b8"/>
+      <text x="290" y="81" text-anchor="middle" font-size="10" fill="#334155">HTTPS → auth.customer.domain</text>
+      <rect x="175" y="108" width="150" height="48" rx="8" fill="#134e4a"/>
+      <text x="250" y="130" text-anchor="middle" font-size="11" font-weight="600" fill="#fff">Keycloak</text>
+      <text x="250" y="146" text-anchor="middle" font-size="8" fill="#99f6e4">SSO · MFA · OIDC/SAML</text>
+      <rect x="345" y="116" width="90" height="32" rx="6" fill="#f0fdfa" stroke="#14b8a6"/>
+      <text x="390" y="136" text-anchor="middle" font-size="9" fill="#0f766e">PostgreSQL</text>
+      <line x1="250" y1="156" x2="250" y2="178" stroke="#14b8a6" stroke-width="2" marker-end="url(#ar)"/>
+      <text x="268" y="172" font-size="8" fill="#64748b">LDAPS</text>
+      <rect x="175" y="180" width="150" height="40" rx="8" fill="#fef3c7" stroke="#d97706"/>
+      <text x="250" y="200" text-anchor="middle" font-size="10" font-weight="600" fill="#92400e">Active Directory</text>
+      <text x="250" y="214" text-anchor="middle" font-size="8" fill="#b45309">source of users</text>
+      <rect x="30" y="108" width="120" height="32" rx="6" fill="#ede9fe" stroke="#7c3aed"/>
+      <text x="90" y="128" text-anchor="middle" font-size="9" fill="#5b21b6">Up to 8 apps</text>
+      <line x1="150" y1="124" x2="173" y2="124" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#ar)"/>
+      <text x="90" y="155" text-anchor="middle" font-size="8" fill="#64748b">OIDC / SAML</text>
+      <text x="290" y="248" text-anchor="middle" font-size="9" fill="#475569">All components on customer VMs in KSA</text>
+    </svg>
+    <p class="diagram-caption"><strong>Delivery target architecture</strong> — same model I run in production; demo available for your pre-sales calls.</p>
+  </div>
+  <h3>Principles I follow on every phase</h3>
+  <ul>
+    <li>AD stays master — no duplicate user database unless agreed</li>
+    <li>Production Keycloak config (PostgreSQL, TLS) — not dev-mode in go-live</li>
+    <li>Per-application UAT sign-off before production cutover</li>
+    <li>Realm export + DB backup before each major change</li>
+    <li>Written handover so your team can support after my engagement</li>
+  </ul>
+  <div class="page-footer"><span>Talha Bilal — SecureLink delivery offer</span><span>Page 3</span></div>
+</section>
+
+<!-- PHASES -->
+<section class="page">
+  <h2>3. Phase-by-phase delivery plan</h2>
+  <p>Aligned to your customer approval scope (Phases 1–6). I estimate <strong>22–24 billable days</strong> over 4–6 calendar weeks.</p>
+
+  <div class="phase-row"><div class="phase-num">1</div><div class="phase-body"><h4>Discovery &amp; design <span class="tag">~3 days</span></h4><ul><li>Join kickoff with customer IT and app owners (remote)</li><li>Validate AD topology, LDAPS path, 8-app protocol matrix (OIDC vs SAML)</li><li>Produce technical design: realm, federation, firewall matrix, cutover plan</li><li>Output: design doc you can attach to customer pack</li></ul></div></div>
+
+  <div class="phase-row"><div class="phase-num">2</div><div class="phase-body"><h4>Platform deployment <span class="tag">~4 days</span></h4><ul><li>Install Keycloak + PostgreSQL on customer VMs (Docker or native per agreement)</li><li>TLS, admin RBAC, brute-force, session timeouts, logging</li><li>Smoke test and initial backup baseline</li></ul></div></div>
+
+  <div class="phase-row"><div class="phase-num">3</div><div class="phase-body"><h4>Active Directory / LDAPS <span class="tag">~3 days</span></h4><ul><li>Configure user federation (bind account, search bases, sAMAccountName/UPN)</li><li>Group → role mappers; sync up to 300 users</li><li>Test valid login, disabled account, group change</li></ul></div></div>
+
+  <div class="phase-row"><div class="phase-num">4</div><div class="phase-body"><h4>MFA configuration <span class="tag">~2 days</span></h4><ul><li>TOTP authenticator policy (baseline per scope)</li><li>Pilot with IT users; admin reset procedure documented</li></ul></div></div>
+
+  <div class="phase-row"><div class="phase-num">5</div><div class="phase-body"><h4>Application SSO — 8 apps <span class="tag">~10 days</span></h4><ul><li>Per app: client registration, metadata/redirect URIs, claims, logout</li><li>Support app owner UAT; fix mapping issues</li><li>Apps per scope: Dynamics, ServiceDesk Plus, Endpoint Central, portal, Temenos, Tookitaki, SAS, +1 TBD</li></ul></div></div>
+
+  <div class="phase-row"><div class="phase-num">6</div><div class="phase-body"><h4>Testing &amp; handover <span class="tag">~2 days</span></h4><ul><li>Regression: AD + MFA + SSO; backup/restore drill</li><li>Administrator guide, implementation notes, remote KT session (half day)</li><li>Support your customer sign-off call if needed</li></ul></div></div>
+
+  <div class="page-footer"><span>Talha Bilal — SecureLink delivery offer</span><span>Page 4</span></div>
+</section>
+
+<!-- TIMELINE + NEEDS -->
+<section class="page">
+  <h2>4. Timeline</h2>
+  <table>
+    <tr><th>Week</th><th>My focus</th><th>SecureLink / customer</th></tr>
+    <tr><td>1</td><td>Discovery, design, prerequisites review</td><td>VMs ordered, app owners named, kickoff</td></tr>
+    <tr><td>2</td><td>Deploy Keycloak; AD/LDAPS live</td><td>DNS, TLS cert, firewall rules, AD service account</td></tr>
+    <tr><td>3</td><td>MFA; apps 1–3 SSO</td><td>App owners in UAT</td></tr>
+    <tr><td>4</td><td>Apps 4–8 SSO</td><td>Change windows, UAT sign-offs</td></tr>
+    <tr><td>5</td><td>Regression, issue fixes</td><td>Customer UAT support</td></tr>
+    <tr><td>6</td><td>Docs, KT, close-out</td><td>Customer sign-off</td></tr>
+  </table>
+  <p><em>Slips if: late VM access, firewall delays, or app owners unavailable &gt; 5 business days.</em></p>
+
+  <h2>5. What I need from SecureLink to start</h2>
+  <table>
+    <tr><th>Item</th><th>When</th></tr>
+    <tr><td>Signed subcontract / SOW referencing customer scope</td><td>Before Phase 1</td></tr>
+    <tr><td>VPN or jump access to customer Keycloak + DB servers</td><td>Week 2</td></tr>
+    <tr><td>AD bind account credentials (secure channel)</td><td>Week 2</td></tr>
+    <tr><td>Intro to customer AD admin and each app owner</td><td>Week 1</td></tr>
+    <tr><td>Customer SSO vendor docs per application</td><td>Week 1–3</td></tr>
+    <tr><td>Single point of contact at SecureLink for priorities</td><td>Ongoing</td></tr>
+  </table>
+
+  <h2>6. Out of scope for my fee</h2>
+  <ul>
+    <li>Customer infrastructure procurement, OS/DB licensing, SSL purchase</li>
+    <li>Application source code changes or custom connectors</li>
+    <li>SecureLink sales, legal contract with end customer, 24×7 post-warranty support</li>
+    <li>On-site KSA travel (quoted separately if required)</li>
+    <li>Apps beyond 8 or without standard SSO protocols</li>
+  </ul>
+  <div class="page-footer"><span>Talha Bilal — SecureLink delivery offer</span><span>Page 5</span></div>
+</section>
+
+<!-- COMMERCIAL -->
+<section class="page">
+  <h2>7. My commercial offer to SecureLink</h2>
+  <p class="lead">Fixed price for complete <strong>remote technical delivery</strong> of Phases 1–6 above. You manage customer commercial and margin separately.</p>
+
+  <table>
+    <tr><th>Phase</th><th>My work</th><th style="text-align:right">SAR</th></tr>
+    <tr><td>1</td><td>Discovery &amp; technical design</td><td style="text-align:right">8,000</td></tr>
+    <tr><td>2</td><td>Keycloak + PostgreSQL deployment &amp; hardening</td><td style="text-align:right">16,000</td></tr>
+    <tr><td>3</td><td>AD / LDAPS federation (≤300 users)</td><td style="text-align:right">14,000</td></tr>
+    <tr><td>4</td><td>MFA (TOTP) configuration</td><td style="text-align:right">6,000</td></tr>
+    <tr><td>5</td><td>8 × application SSO integrations</td><td style="text-align:right">24,000</td></tr>
+    <tr><td>6</td><td>Testing, documentation, KT</td><td style="text-align:right">8,000</td></tr>
+  </table>
+
+  <div class="price-box">
+    <div>
+      <div style="font-size:10pt;opacity:0.9">My total fixed fee to SecureLink</div>
+      <div class="amt">SAR 76,000</div>
+    </div>
+    <div style="font-size:9pt;max-width:200px;text-align:right;opacity:0.85">Excludes VAT · Remote delivery · ~22–24 billable days</div>
+  </div>
+
+  <h3>Alternative: time &amp; materials</h3>
+  <p>If you prefer T&amp;M: <strong>SAR 3,250 per day</strong> (8 hours), estimated <strong>24 days</strong> ≈ SAR 78,000 cap with your written approval before exceeding.</p>
+
+  <h3>Payment schedule</h3>
+  <table>
+    <tr><th>Milestone</th><th>%</th><th style="text-align:right">SAR</th><th>Trigger</th></tr>
+    <tr><td>Engagement start</td><td>30%</td><td style="text-align:right">22,800</td><td>Signed SOW + kickoff</td></tr>
+    <tr><td>AD + MFA working in UAT</td><td>25%</td><td style="text-align:right">19,000</td><td>Phases 3–4 accepted by you</td></tr>
+    <tr><td>8 applications in UAT</td><td>30%</td><td style="text-align:right">22,800</td><td>Phase 5 accepted by you</td></tr>
+    <tr><td>Project close</td><td>15%</td><td style="text-align:right">11,400</td><td>Handover complete</td></tr>
+  </table>
+
+  <h3>Included warranty</h3>
+  <p><strong>14 calendar days</strong> after my handover: defect fixes for configuration I delivered (not new apps or scope changes).</p>
+
+  <div class="page-footer"><span>Talha Bilal — SecureLink delivery offer</span><span>Page 6</span></div>
+</section>
+
+<!-- WHY ME + ACCEPT -->
+<section class="page">
+  <h2>8. Why engage me on this project</h2>
+  <table>
+    <tr><th>Capability</th><th>Evidence</th></tr>
+    <tr><td>On-prem Keycloak in production</td><td>Technical Team Lead, Dictalabs — realms, AD/LDAP, OIDC SSO</td></tr>
+    <tr><td>Java / Spring Boot platforms</td><td>5+ years PKI, signing, IAM microservices</td></tr>
+    <tr><td>Pre-sales support for you</td><td>Runnable demo + technical PDF for customer calls</td></tr>
+    <tr><td>Remote delivery</td><td>UTC+5, overlap with KSA business hours</td></tr>
+    <tr><td>Documentation</td><td>Design docs, admin guides, KT — reduces your support load</td></tr>
+  </table>
+  <p><strong>References:</strong> https://talha-bilal.github.io/portfolio/ &nbsp;|&nbsp; https://github.com/talha-bilal/trust-platform-samples</p>
+
+  <h2>9. Acceptance</h2>
+  <p>By signing below, SecureLink Arabia agrees to engage Talha Bilal as remote technical delivery partner for the Keycloak IAM implementation described herein, at the commercial terms in Section 7.</p>
+  <div class="sign-box">
+    <strong>SecureLink Arabia</strong>
+    <div class="sign-line"></div>
+    <p>Name: _______________________ &nbsp; Title: _______________________</p>
+    <p>Signature: _______________________ &nbsp; Date: _______________________</p>
+  </div>
+  <div class="sign-box">
+    <strong>Talha Bilal</strong>
+    <p>Email: talha.at43@gmail.com &nbsp;|&nbsp; LinkedIn: linkedin.com/in/talha-bilal-a74477154</p>
+    <div class="sign-line"></div>
+    <p>Signature: _______________________ &nbsp; Date: _______________________</p>
+  </div>
+  <p style="margin-top:16px;font-size:8.5pt;color:#64748b">Offer valid 60 days. Independent contractor; no employment relationship implied. Customer end-client name and NDA to be executed separately if required.</p>
+  <div class="page-footer"><span>Talha Bilal — SecureLink delivery offer</span><span>Page 7</span></div>
+</section>
+
+</body>
+</html>
