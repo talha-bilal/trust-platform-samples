@@ -2,21 +2,31 @@
 
 Runnable lab that mirrors a **typical integrator client ask**:
 
-> On-prem Keycloak · directory (Active Directory) for users · OIDC single sign-on across internal applications.
+> On-prem Keycloak · directory (Active Directory) for users · MFA · OIDC/SAML single sign-on across internal applications.
 
 **OpenLDAP in this demo = stand-in for Active Directory.** Keycloak uses the same **LDAP user federation** settings in production; only the connection URL, bind DN, and attribute names change.
 
-## What you can show the client (5 minutes)
+## Start the demo (one command)
+
+```powershell
+cd keycloak-ad-sso-demo
+powershell -ExecutionPolicy Bypass -File setup/start-demo.ps1
+```
+
+**Detailed guide:** **[DEMO-SETUP-GUIDE.md](./DEMO-SETUP-GUIDE.md)** — prerequisites, configuration, presentation, troubleshooting.
+
+## What you can show the client (10 minutes)
 
 | Step | Show |
 |------|------|
-| 1 | Employee opens **HR Portal** → redirected to **Keycloak** login |
-| 2 | User signs in with **directory password** (`ahmed` / `Demo@123`) — not a separate app password |
-| 3 | User lands in HR app with OIDC token (name, email claims) |
-| 4 | Open **Finance Portal** in new tab → **already signed in** (SSO) |
-| 5 | Keycloak admin → Users imported from directory; two OIDC clients registered |
+| 1 | **Application launcher** (:3000) — employee hub for 8 apps |
+| 2 | Login at **Keycloak** with directory password (`ahmed` / `Demo@123`) |
+| 3 | Open **HR Portal** — OIDC token claims |
+| 4 | Open **Finance Portal** — **already signed in** (SSO) |
+| 5 | Admin console — LDAP federation, 8 registered clients, MFA policy |
+| 6 | **Integration packs** — automated output per app for vendor teams |
 
-Full presenter script: **[DEMO-WALKTHROUGH.md](./DEMO-WALKTHROUGH.md)**
+Presenter script: **[DEMO-WALKTHROUGH.md](./DEMO-WALKTHROUGH.md)**
 
 **Detailed PDF guide (AD + OIDC flows):** [docs/IAM-OIDC-AD-Flow.pdf](./docs/IAM-OIDC-AD-Flow.pdf)  
 
@@ -56,16 +66,23 @@ flowchart TB
 
 ```powershell
 cd keycloak-ad-sso-demo
+powershell -ExecutionPolicy Bypass -File setup/start-demo.ps1
+```
+
+Or manually:
+
+```powershell
 docker compose up -d
-# wait ~60s for Keycloak
 powershell -File setup/configure-ldap.ps1
+powershell -File setup/register-clients-from-intake.ps1
 ```
 
 Open:
 
 | URL | Purpose |
 |-----|---------|
-| http://localhost:3001 | HR Portal (login first) |
+| http://localhost:3000 | **Application launcher** (start here — 8 apps) |
+| http://localhost:3001 | HR Portal (OIDC demo) |
 | http://localhost:3002 | Finance Portal (SSO) |
 | http://localhost:8080 | Keycloak admin (`admin` / `admin`) |
 
@@ -99,10 +116,14 @@ Open:
 
 ```
 keycloak-ad-sso-demo/
-  docker-compose.yml      # Keycloak, Postgres, LDAP, two demo apps
+  DEMO-SETUP-GUIDE.md     # Full setup & presentation guide
+  docker-compose.yml      # Keycloak, Postgres, LDAP, demo apps
+  setup/start-demo.ps1    # One-command startup
+  setup/apps-intake.example.json
+  integration-packs/      # Generated SSO packs per app
   ldap/bootstrap.ldif     # Demo employees & groups
-  keycloak/import/        # Realm + OIDC clients
-  demo-apps/              # HR & Finance portals
+  keycloak/import/        # Realm bootstrap
+  demo-apps/              # Launcher + HR & Finance portals
   setup/configure-ldap.*  # Attach LDAP federation + sync users
   DEMO-WALKTHROUGH.md     # Call / presentation script
   PROJECT.md              # Client-facing summary

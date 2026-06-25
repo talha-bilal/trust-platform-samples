@@ -56,6 +56,13 @@ services:
       retries: 12
       start_period: 60s
 
+  app-launcher:
+    image: nginx:alpine
+    ports:
+      - "3000:80"
+    volumes:
+      - ./demo-apps/app-launcher:/usr/share/nginx/html:ro
+
   hr-portal:
     image: nginx:alpine
     ports:

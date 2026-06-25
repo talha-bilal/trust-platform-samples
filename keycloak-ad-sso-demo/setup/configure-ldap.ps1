@@ -62,10 +62,12 @@ docker exec $kc /opt/keycloak/bin/kcadm.sh create "user-storage/$id/sync" -r com
 
 Write-Host ""
 Write-Host "Demo ready."
-Write-Host "  Keycloak admin : http://localhost:8080  (admin / admin)"
-Write-Host "  HR Portal      : http://localhost:3001  (login: ahmed / Demo@123)"
-Write-Host "  Finance Portal : http://localhost:3002  (SSO — no second login)"
+Write-Host "  Application hub : http://localhost:3000  (start here — 8 apps)"
+Write-Host "  Keycloak admin  : http://localhost:8080  (admin / admin)"
+Write-Host "  HR Portal       : http://localhost:3001  (login: ahmed / Demo@123)"
+Write-Host "  Finance Portal  : http://localhost:3002  (SSO — no second login)"
 Write-Host ""
-Write-Host "Presenter guide: DEMO-WALKTHROUGH.md"
+Write-Host "Full guide: DEMO-SETUP-GUIDE.md"
+Write-Host "Presenter:  DEMO-WALKTHROUGH.md"
 
 Pop-Location

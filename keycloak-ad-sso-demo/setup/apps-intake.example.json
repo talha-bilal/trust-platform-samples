@@ -1,0 +1,71 @@
+[
+  {
+    "name": "HR Portal",
+    "clientId": "hr-portal",
+    "protocol": "oidc",
+    "publicClient": true,
+    "redirectUris": ["http://localhost:3001/*"],
+    "webOrigins": ["http://localhost:3001"]
+  },
+  {
+    "name": "Finance Portal",
+    "clientId": "finance-portal",
+    "protocol": "oidc",
+    "publicClient": true,
+    "redirectUris": ["http://localhost:3002/*"],
+    "webOrigins": ["http://localhost:3002"]
+  },
+  {
+    "name": "Application Launcher",
+    "clientId": "app-launcher",
+    "protocol": "oidc",
+    "publicClient": true,
+    "redirectUris": ["http://localhost:3000/*"],
+    "webOrigins": ["http://localhost:3000"]
+  },
+  {
+    "name": "Microsoft Dynamics",
+    "clientId": "dynamics-365",
+    "protocol": "oidc",
+    "publicClient": false,
+    "redirectUris": ["https://dynamics.company.local/auth/callback"],
+    "webOrigins": ["https://dynamics.company.local"]
+  },
+  {
+    "name": "ServiceDesk Plus",
+    "clientId": "servicedesk-plus",
+    "protocol": "saml",
+    "redirectUris": ["https://servicedesk.company.local/saml/acs"],
+    "rootUrl": "https://servicedesk.company.local"
+  },
+  {
+    "name": "Endpoint Central",
+    "clientId": "endpoint-central",
+    "protocol": "saml",
+    "redirectUris": ["https://endpoint.company.local/saml/consume"],
+    "rootUrl": "https://endpoint.company.local"
+  },
+  {
+    "name": "Employee Portal",
+    "clientId": "employee-portal",
+    "protocol": "oidc",
+    "publicClient": true,
+    "redirectUris": ["https://portal.company.local/*"],
+    "webOrigins": ["https://portal.company.local"]
+  },
+  {
+    "name": "Temenos",
+    "clientId": "temenos",
+    "protocol": "saml",
+    "redirectUris": ["https://temenos.company.local/saml/acs"],
+    "rootUrl": "https://temenos.company.local"
+  },
+  {
+    "name": "Compliance (Tookitaki)",
+    "clientId": "tookitaki",
+    "protocol": "oidc",
+    "publicClient": false,
+    "redirectUris": ["https://compliance.company.local/oauth/callback"],
+    "webOrigins": ["https://compliance.company.local"]
+  }
+]

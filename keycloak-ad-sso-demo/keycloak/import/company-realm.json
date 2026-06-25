@@ -8,7 +8,25 @@
   "resetPasswordAllowed": false,
   "editUsernameAllowed": false,
   "sslRequired": "none",
+  "otpPolicyType": "totp",
+  "otpPolicyAlgorithm": "HmacSHA1",
+  "otpPolicyDigits": 6,
+  "otpPolicyPeriod": 30,
   "clients": [
+    {
+      "clientId": "app-launcher",
+      "name": "Application Launcher",
+      "enabled": true,
+      "publicClient": true,
+      "protocol": "openid-connect",
+      "redirectUris": ["http://localhost:3000/*"],
+      "webOrigins": ["http://localhost:3000", "+"],
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "attributes": {
+        "pkce.code.challenge.method": "S256"
+      }
+    },
     {
       "clientId": "hr-portal",
       "name": "HR Portal",
