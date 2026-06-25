@@ -4,11 +4,10 @@
 
 | File | Purpose |
 |------|---------|
-| **[Talha-Bilal-SecureLink-Delivery-Offer.pdf](./Talha-Bilal-SecureLink-Delivery-Offer.pdf)** | Your **implementation plan + your cost** to SecureLink |
+| **[Talha-Bilal-SecureLink-Delivery-Offer.pdf](./Talha-Bilal-SecureLink-Delivery-Offer.pdf)** | **Implementation plan + USD 2,500 budget** |
 | [subcontractor/talha-delivery-offer.html](./subcontractor/talha-delivery-offer.html) | Edit source (pricing, days, contact) |
 
-**Your offer in this PDF:** **SAR 76,000** fixed (remote delivery, Phases 1–6).  
-SecureLink adds their margin when pricing the end customer.
+**Your offer in this PDF:** **USD 2,500** fixed (remote delivery, Phases 1–6).
 
 Regenerate:
 
