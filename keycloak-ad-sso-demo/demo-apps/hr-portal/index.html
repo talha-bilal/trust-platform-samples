@@ -63,27 +63,42 @@
       <pre id="claims">—</pre>
     </div>
     <script>
-      const keycloak = new Keycloak({
-        url: "http://localhost:8080",
-        realm: "company",
-        clientId: "hr-portal",
-      });
-
-      keycloak
-        .init({ onLoad: "login-required", pkceMethod: "S256", checkLoginIframe: false })
-        .then((authenticated) => {
+      fetch("/config/tenant.json")
+        .then((r) => r.json())
+        .then((cfg) => {
+          const keycloak = new Keycloak({
+            url: cfg.keycloakUrl,
+            realm: cfg.realm,
+            clientId: "hr-portal",
+          });
+          return keycloak
+            .init({ onLoad: "login-required", pkceMethod: "S256", checkLoginIframe: false })
+            .then((authenticated) => ({ keycloak, authenticated, cfg }));
+        })
+        .then(({ keycloak, authenticated, cfg }) => {
           document.getElementById("status").textContent = authenticated
             ? "Signed in as " + (keycloak.tokenParsed.preferred_username || keycloak.tokenParsed.sub)
             : "Not authenticated";
           document.getElementById("claims").textContent = JSON.stringify(keycloak.tokenParsed, null, 2);
           document.getElementById("logout").hidden = !authenticated;
+          const fin = cfg.apps.find((a) => a.clientId === "finance-portal");
+          if (fin && fin.url) {
+            document.querySelector('a[href*="3002"]').href = fin.url;
+          }
         })
         .catch((err) => {
-          document.getElementById("status").textContent = "SSO error — is Keycloak running? Run setup/configure-ldap.ps1";
+          document.getElementById("status").textContent = "SSO error — run setup/fresh-deploy.ps1";
           document.getElementById("claims").textContent = String(err);
         });
 
-      document.getElementById("logout").addEventListener("click", () => keycloak.logout({ redirectUri: window.location.origin + "/" }));
+      document.getElementById("logout").addEventListener("click", () => {
+        fetch("/config/tenant.json")
+          .then((r) => r.json())
+          .then((cfg) => {
+            const kc = new Keycloak({ url: cfg.keycloakUrl, realm: cfg.realm, clientId: "hr-portal" });
+            kc.init({ onLoad: "check-sso" }).then(() => kc.logout({ redirectUri: window.location.origin + "/" }));
+          });
+      });
     </script>
   </body>
 </html>

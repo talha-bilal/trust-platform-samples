@@ -3,7 +3,7 @@
     "clientId":  "tookitaki",
     "protocol":  "OIDC",
     "realm":  "company",
-    "generatedAt":  "2026-06-25T13:49:36.2748509+05:00",
+    "generatedAt":  "2026-06-25T15:20:00.1198847+05:00",
     "issuer":  "http://localhost:8080/realms/company",
     "discoveryUrl":  "http://localhost:8080/realms/company/.well-known/openid-configuration",
     "authorizationEndpoint":  "http://localhost:8080/realms/company/protocol/openid-connect/auth",

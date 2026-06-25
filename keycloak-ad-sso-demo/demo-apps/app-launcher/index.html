@@ -133,8 +133,8 @@
   </head>
   <body>
     <header>
-      <h1>Company applications</h1>
-      <p class="sub">Single sign-on via on-prem Keycloak · directory users · MFA ready</p>
+      <h1 id="company-title">Applications</h1>
+      <p class="sub" id="company-sub">Loading…</p>
     </header>
 
     <div class="session">
@@ -153,60 +153,64 @@
     </p>
 
     <script>
-      const APPS = [
-        { name: "HR Portal", protocol: "OIDC", clientId: "hr-portal", live: true, url: "http://localhost:3001/" },
-        { name: "Finance Portal", protocol: "OIDC", clientId: "finance-portal", live: true, url: "http://localhost:3002/" },
-        { name: "Microsoft Dynamics", protocol: "OIDC", clientId: "dynamics-365", live: false },
-        { name: "ServiceDesk Plus", protocol: "SAML", clientId: "servicedesk-plus", live: false },
-        { name: "Endpoint Central", protocol: "SAML", clientId: "endpoint-central", live: false },
-        { name: "Employee Portal", protocol: "OIDC", clientId: "employee-portal", live: false },
-        { name: "Temenos", protocol: "SAML", clientId: "temenos", live: false },
-        { name: "Compliance (Tookitaki)", protocol: "OIDC", clientId: "tookitaki", live: false },
-      ];
+      let keycloak;
+      let tenant;
 
-      const keycloak = new Keycloak({
-        url: "http://localhost:8080",
-        realm: "company",
-        clientId: "app-launcher",
-      });
-
-      function renderApps() {
+      function renderApps(apps) {
         const grid = document.getElementById("apps");
-        grid.innerHTML = APPS.map((app) => {
+        grid.innerHTML = apps.map((app) => {
+          const proto = (app.protocol || "OIDC").toUpperCase();
           const live = app.live
             ? `<span class="tag live">Live demo</span>`
             : `<span class="tag pack">Integration pack</span>`;
-          const proto = `<span class="tag ${app.protocol === "OIDC" ? "oidc" : "saml"}">${app.protocol}</span>`;
-          const link = app.live
+          const protoTag = `<span class="tag ${proto === "OIDC" ? "oidc" : "saml"}">${proto}</span>`;
+          const link = app.live && app.url
             ? `<a class="open" href="${app.url}" target="_blank" rel="noreferrer">Open application →</a>`
             : `<span class="meta">Client <code>${app.clientId}</code> registered in Keycloak</span>`;
           return `<article class="tile ${app.live ? "live" : ""}">
             <h2>${app.name}</h2>
-            <div>${proto} ${live}</div>
+            <div>${protoTag} ${live}</div>
             ${link}
           </article>`;
         }).join("");
       }
 
-      keycloak
-        .init({ onLoad: "login-required", pkceMethod: "S256", checkLoginIframe: false })
+      loadTenantConfig()
+        .then((cfg) => {
+          tenant = cfg;
+          document.getElementById("company-title").textContent = cfg.companyName + " — Applications";
+          document.getElementById("company-sub").textContent =
+            "Single sign-on · directory users · MFA · realm " + cfg.realm;
+          renderApps(cfg.apps);
+          keycloak = initKeycloak(cfg, "app-launcher");
+          return keycloak.init({ onLoad: "login-required", pkceMethod: "S256", checkLoginIframe: false });
+        })
         .then((authenticated) => {
           const user = keycloak.tokenParsed.preferred_username || keycloak.tokenParsed.sub;
           document.getElementById("status").innerHTML = authenticated
             ? `Signed in as <strong>${user}</strong> — same session works across all SSO-enabled apps`
             : "Not signed in";
           document.getElementById("logout").hidden = !authenticated;
-          renderApps();
         })
         .catch((err) => {
           document.getElementById("status").textContent =
-            "Cannot reach Keycloak — start the demo: setup/start-demo.ps1";
+            "Cannot start — run setup/fresh-deploy.ps1 and check /config/tenant.json";
           console.error(err);
         });
 
       document.getElementById("logout").addEventListener("click", () =>
         keycloak.logout({ redirectUri: window.location.origin + "/" })
       );
+
+      async function loadTenantConfig() {
+        const r = await fetch("/config/tenant.json");
+        if (!r.ok) throw new Error("tenant.json missing");
+        return r.json();
+      }
+
+      function initKeycloak(config, clientId) {
+        return new Keycloak({ url: config.keycloakUrl, realm: config.realm, clientId });
+      }
     </script>
   </body>
 </html>

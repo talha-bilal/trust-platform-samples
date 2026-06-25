@@ -13,7 +13,10 @@ cd keycloak-ad-sso-demo
 powershell -ExecutionPolicy Bypass -File setup/start-demo.ps1
 ```
 
-**Detailed guide:** **[DEMO-SETUP-GUIDE.md](./DEMO-SETUP-GUIDE.md)** — prerequisites, configuration, presentation, troubleshooting.
+**Fresh cloud install (wipe + rebrand):** [CLOUD-DEPLOYMENT.md](./CLOUD-DEPLOYMENT.md)  
+**Admin panel (sessions, clients, revoke):** [ADMIN-OPERATIONS-GUIDE.md](./ADMIN-OPERATIONS-GUIDE.md)
+
+**Detailed guide:** **[DEMO-SETUP-GUIDE.md](./DEMO-SETUP-GUIDE.md)**
 
 ## What you can show the client (10 minutes)
 

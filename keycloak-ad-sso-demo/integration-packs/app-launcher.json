@@ -3,7 +3,7 @@
     "clientId":  "app-launcher",
     "protocol":  "OIDC",
     "realm":  "company",
-    "generatedAt":  "2026-06-25T13:49:00.9066340+05:00",
+    "generatedAt":  "2026-06-25T15:19:29.2179298+05:00",
     "issuer":  "http://localhost:8080/realms/company",
     "discoveryUrl":  "http://localhost:8080/realms/company/.well-known/openid-configuration",
     "authorizationEndpoint":  "http://localhost:8080/realms/company/protocol/openid-connect/auth",

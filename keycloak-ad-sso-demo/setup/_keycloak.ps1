@@ -44,11 +44,20 @@ function Wait-KeycloakReady {
 
 function Connect-KcAdmin {
   $kc = Get-KcContainer
+  if (Test-Path (Join-Path $script:DemoRoot "setup/Read-DemoEnv.ps1")) {
+    . (Join-Path $script:DemoRoot "setup/Read-DemoEnv.ps1") | Out-Null
+    $demoEnv = Get-DemoEnv -Root $script:DemoRoot
+    $adminUser = $demoEnv.KEYCLOAK_ADMIN_USER
+    $adminPass = $demoEnv.KEYCLOAK_ADMIN_PASSWORD
+  } else {
+    $adminUser = "admin"
+    $adminPass = "admin"
+  }
   $prev = $ErrorActionPreference
   $ErrorActionPreference = "Continue"
   try {
     docker exec $kc /opt/keycloak/bin/kcadm.sh config credentials `
-      --server $script:KcBaseUrl --realm master --user admin --password admin 2>&1 | Out-Null
+      --server $script:KcBaseUrl --realm master --user $adminUser --password $adminPass 2>&1 | Out-Null
     if ($LASTEXITCODE -ne 0) { throw "kcadm login failed" }
   } finally {
     $ErrorActionPreference = $prev

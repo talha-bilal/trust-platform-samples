@@ -24,8 +24,10 @@ $prevEa = $ErrorActionPreference
 $ErrorActionPreference = "Continue"
 
 Write-Host "Configuring admin credentials..."
+. "$PSScriptRoot/Read-DemoEnv.ps1" | Out-Null
+$demoEnv = Get-DemoEnv -Root $root
 docker exec $kc /opt/keycloak/bin/kcadm.sh config credentials `
-  --server http://localhost:8080 --realm master --user admin --password admin 2>&1 | Out-Null
+  --server http://localhost:8080 --realm master --user $demoEnv.KEYCLOAK_ADMIN_USER --password $demoEnv.KEYCLOAK_ADMIN_PASSWORD 2>&1 | Out-Null
 if ($LASTEXITCODE -ne 0) { throw "kcadm login failed" }
 
 $existing = docker exec $kc /opt/keycloak/bin/kcadm.sh get components -r company -q name=company-ldap --fields id 2>&1 | Out-String

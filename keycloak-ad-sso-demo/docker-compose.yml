@@ -1,5 +1,5 @@
-# Portfolio demo: on-prem Keycloak + directory (LDAP/AD-style) + OIDC SSO for two apps
-# Production: replace OpenLDAP with Active Directory — same Keycloak federation model
+# Portfolio demo: on-prem Keycloak + directory (LDAP/AD-style) + OIDC SSO
+# Cloud: copy .env.example -> .env then run setup/fresh-deploy.ps1
 
 services:
   postgres:
@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_DB: keycloak
       POSTGRES_USER: keycloak
-      POSTGRES_PASSWORD: keycloak
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-keycloak}
     volumes:
       - kc_pg:/var/lib/postgresql/data
     healthcheck:
@@ -19,9 +19,9 @@ services:
   openldap:
     image: osixia/openldap:1.5.0
     environment:
-      LDAP_ORGANISATION: "Demo Company"
-      LDAP_DOMAIN: "company.local"
-      LDAP_ADMIN_PASSWORD: "admin"
+      LDAP_ORGANISATION: ${LDAP_ORGANISATION:-Demo Company}
+      LDAP_DOMAIN: ${LDAP_DOMAIN:-company.local}
+      LDAP_ADMIN_PASSWORD: ${LDAP_ADMIN_PASSWORD:-admin}
     ports:
       - "1389:389"
 
@@ -34,17 +34,17 @@ services:
       openldap:
         condition: service_started
     environment:
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN_USER:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
       KC_DB: postgres
       KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
       KC_DB_USERNAME: keycloak
-      KC_DB_PASSWORD: keycloak
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD:-keycloak}
       KC_HEALTH_ENABLED: "true"
       KC_HOSTNAME_STRICT: "false"
       KC_HTTP_ENABLED: "true"
     ports:
-      - "8080:8080"
+      - "${KEYCLOAK_PORT:-8080}:8080"
     volumes:
       - ./keycloak/import:/opt/keycloak/data/import:ro
     healthcheck:
@@ -57,23 +57,26 @@ services:
   app-launcher:
     image: nginx:alpine
     ports:
-      - "3000:80"
+      - "${APP_LAUNCHER_PORT:-3000}:80"
     volumes:
       - ./demo-apps/app-launcher:/usr/share/nginx/html:ro
+      - ./demo-apps/config:/usr/share/nginx/html/config:ro
 
   hr-portal:
     image: nginx:alpine
     ports:
-      - "3001:80"
+      - "${HR_PORTAL_PORT:-3001}:80"
     volumes:
       - ./demo-apps/hr-portal:/usr/share/nginx/html:ro
+      - ./demo-apps/config:/usr/share/nginx/html/config:ro
 
   finance-portal:
     image: nginx:alpine
     ports:
-      - "3002:80"
+      - "${FINANCE_PORTAL_PORT:-3002}:80"
     volumes:
       - ./demo-apps/finance-portal:/usr/share/nginx/html:ro
+      - ./demo-apps/config:/usr/share/nginx/html/config:ro
 
 volumes:
   kc_pg:

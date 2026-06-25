@@ -33,11 +33,25 @@ if ($Reset) {
 }
 
 Write-Host "Starting containers (Keycloak, PostgreSQL, LDAP, demo apps)..."
-docker compose up -d
+if (Test-Path (Join-Path $root ".env")) {
+  docker compose --env-file .env up -d
+  & "$PSScriptRoot/render-tenant-config.ps1"
+} else {
+  docker compose up -d
+  & "$PSScriptRoot/render-tenant-config.ps1"
+}
 
 & "$PSScriptRoot/seed-ldap.ps1"
 & "$PSScriptRoot/configure-ldap.ps1"
-& "$PSScriptRoot/register-clients-from-intake.ps1"
+$intakeFile = "$PSScriptRoot/apps-intake.example.json"
+if (Test-Path "$PSScriptRoot/apps-intake.generated.json") {
+  $intakeFile = "$PSScriptRoot/apps-intake.generated.json"
+}
+& "$PSScriptRoot/register-clients-from-intake.ps1" -IntakeFile $intakeFile
+
+if (Test-Path (Join-Path $root ".env")) {
+  try { & "$PSScriptRoot/configure-branding.ps1" } catch {}
+}
 
 if (-not $SkipMfa) {
   try {
@@ -58,8 +72,9 @@ Write-Host ""
 Write-Host "  Login user     ahmed / Demo@123  (directory password)"
 Write-Host "  Alt user       sara  / Demo@123"
 Write-Host ""
-Write-Host "  Presenter script : DEMO-WALKTHROUGH.md"
-Write-Host "  Full setup guide : DEMO-SETUP-GUIDE.md"
+Write-Host "  Cloud deploy:     CLOUD-DEPLOYMENT.md"
+Write-Host "  Admin panel:      ADMIN-OPERATIONS-GUIDE.md"
+Write-Host "  Fresh reinstall:  setup/fresh-deploy.ps1"
 Write-Host ""
 
 Pop-Location
