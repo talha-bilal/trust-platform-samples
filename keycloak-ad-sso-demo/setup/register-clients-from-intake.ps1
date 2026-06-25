@@ -35,41 +35,49 @@ foreach ($app in $apps) {
   }
 
   $kc = Get-KcContainer
+  $tmpLocal = Join-Path $env:TEMP "kc-client-$cid.json"
+
   if ($app.protocol -eq "oidc") {
     $public = if ($null -ne $app.publicClient) { $app.publicClient } else { $true }
-    $redirects = ($app.redirectUris | ForEach-Object { $_ }) -join '","'
-    $origins = if ($app.webOrigins) { ($app.webOrigins | ForEach-Object { $_ }) -join '","' } else { "+" }
-
-    docker exec $kc /opt/keycloak/bin/kcadm.sh create clients -r company `
-      -s clientId=$cid `
-      -s name="$($app.name)" `
-      -s enabled=true `
-      -s protocol=openid-connect `
-      -s publicClient=$($public.ToString().ToLower()) `
-      -s standardFlowEnabled=true `
-      -s directAccessGrantsEnabled=false `
-      -s "redirectUris=[`"$redirects`"]" `
-      -s "webOrigins=[`"$origins`"]" `
-      -s 'attributes.pkce.code.challenge.method=S256' | Out-Null
-
+    $origins = if ($app.webOrigins) { @($app.webOrigins) } else { @("+") }
+    $payload = [ordered]@{
+      clientId                 = $cid
+      name                     = $app.name
+      enabled                  = $true
+      protocol                 = "openid-connect"
+      publicClient             = $public
+      standardFlowEnabled      = $true
+      directAccessGrantsEnabled = $false
+      redirectUris             = @($app.redirectUris)
+      webOrigins               = $origins
+      attributes               = @{ "pkce.code.challenge.method" = "S256" }
+    }
+    $json = $payload | ConvertTo-Json -Depth 6
+    [System.IO.File]::WriteAllText($tmpLocal, $json)
+    $null = docker cp $tmpLocal "${kc}:/tmp/kc-client.json" 2>&1
+    $null = docker exec $kc /opt/keycloak/bin/kcadm.sh create clients -r company -f /tmp/kc-client.json 2>&1
     Write-Host "  [oidc] Created $cid"
   } elseif ($app.protocol -eq "saml") {
-    $redirects = ($app.redirectUris | ForEach-Object { $_ }) -join '","'
     $root = if ($app.rootUrl) { $app.rootUrl } else { "https://placeholder.company.local" }
-
-    docker exec $kc /opt/keycloak/bin/kcadm.sh create clients -r company `
-      -s clientId=$cid `
-      -s name="$($app.name)" `
-      -s enabled=true `
-      -s protocol=saml `
-      -s "redirectUris=[`"$redirects`"]" `
-      -s rootUrl=$root `
-      -s 'attributes.saml.assertion.signature=false' | Out-Null
-
+    $payload = [ordered]@{
+      clientId    = $cid
+      name        = $app.name
+      enabled     = $true
+      protocol    = "saml"
+      redirectUris = @($app.redirectUris)
+      rootUrl     = $root
+      attributes  = @{ "saml.assertion.signature" = "false" }
+    }
+    $json = $payload | ConvertTo-Json -Depth 6
+    [System.IO.File]::WriteAllText($tmpLocal, $json)
+    $null = docker cp $tmpLocal "${kc}:/tmp/kc-client.json" 2>&1
+    $null = docker exec $kc /opt/keycloak/bin/kcadm.sh create clients -r company -f /tmp/kc-client.json 2>&1
     Write-Host "  [saml] Created $cid"
   } else {
     throw "Unknown protocol for $cid : $($app.protocol)"
   }
+
+  Remove-Item $tmpLocal -ErrorAction SilentlyContinue
 
   $internalId = Get-KcClientInternalId -ClientId $cid
   if (-not $internalId) { throw "Could not resolve internal id for $cid" }

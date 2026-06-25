@@ -33,7 +33,7 @@ if ($existing -match '"id"\s*:') {
   Write-Host "LDAP federation already exists - syncing users..."
 } else {
   Write-Host "Creating LDAP user federation (same model as Active Directory)..."
-  docker cp $ldapJson "${kc}:/tmp/ldap-federation.json"
+  $null = docker cp $ldapJson "${kc}:/tmp/ldap-federation.json" 2>&1
   docker exec $kc /opt/keycloak/bin/kcadm.sh create components -r company -f /tmp/ldap-federation.json 2>&1 | Out-Null
   if ($LASTEXITCODE -ne 0) { throw "LDAP federation create failed. Check: docker compose logs keycloak" }
 }

@@ -3,7 +3,7 @@
     "clientId":  "temenos",
     "protocol":  "SAML",
     "realm":  "company",
-    "generatedAt":  "2026-06-25T13:38:55.4596192+05:00",
+    "generatedAt":  "2026-06-25T13:49:28.4768548+05:00",
     "samlMetadataUrl":  "http://localhost:8080/realms/company/protocol/saml/descriptor",
     "entityId":  "http://localhost:8080/realms/company",
     "redirectUris":  [
