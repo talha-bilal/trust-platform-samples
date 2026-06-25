@@ -1,0 +1,13 @@
+﻿{
+    "applicationName":  "Temenos",
+    "clientId":  "temenos",
+    "protocol":  "SAML",
+    "realm":  "company",
+    "generatedAt":  "2026-06-25T13:38:55.4596192+05:00",
+    "samlMetadataUrl":  "http://localhost:8080/realms/company/protocol/saml/descriptor",
+    "entityId":  "http://localhost:8080/realms/company",
+    "redirectUris":  [
+                         "https://temenos.company.local/saml/acs"
+                     ],
+    "instructions":  "Import IdP metadata XML from samlMetadataUrl into the vendor admin console (ServiceDesk, Temenos, etc.)."
+}

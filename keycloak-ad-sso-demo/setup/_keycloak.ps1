@@ -6,11 +6,15 @@ $script:KcBaseUrl = "http://localhost:8080"
 $script:KcRealm = "company"
 
 function Test-DockerRunning {
+  # docker info writes WARNING lines to stderr; with $ErrorActionPreference = "Stop"
+  # those become terminating errors and falsely report Docker as down.
+  $prev = $ErrorActionPreference
   try {
-    docker info 2>&1 | Out-Null
+    $ErrorActionPreference = "Continue"
+    $null = docker version --format "{{.Server.Version}}" 2>$null
     return $LASTEXITCODE -eq 0
-  } catch {
-    return $false
+  } finally {
+    $ErrorActionPreference = $prev
   }
 }
 
@@ -40,8 +44,15 @@ function Wait-KeycloakReady {
 
 function Connect-KcAdmin {
   $kc = Get-KcContainer
-  docker exec $kc /opt/keycloak/bin/kcadm.sh config credentials `
-    --server $script:KcBaseUrl --realm master --user admin --password admin | Out-Null
+  $prev = $ErrorActionPreference
+  $ErrorActionPreference = "Continue"
+  try {
+    docker exec $kc /opt/keycloak/bin/kcadm.sh config credentials `
+      --server $script:KcBaseUrl --realm master --user admin --password admin 2>&1 | Out-Null
+    if ($LASTEXITCODE -ne 0) { throw "kcadm login failed" }
+  } finally {
+    $ErrorActionPreference = $prev
+  }
   return $kc
 }
 
@@ -65,16 +76,44 @@ function Invoke-Kcadm {
 function Test-KcClientExists {
   param([string]$ClientId)
   $kc = Get-KcContainer
-  $out = docker exec $kc /opt/keycloak/bin/kcadm.sh get clients -r $script:KcRealm -q clientId=$ClientId --fields id 2>$null
-  return ($out -match '"id"')
+  $prev = $ErrorActionPreference
+  $ErrorActionPreference = "Continue"
+  try {
+    $out = docker exec $kc /opt/keycloak/bin/kcadm.sh get clients -r $script:KcRealm -q clientId=$ClientId --fields id 2>&1 | Out-String
+    return ($out -match '"id"')
+  } finally {
+    $ErrorActionPreference = $prev
+  }
+}
+
+function Get-KcClientInternalId {
+  param([string]$ClientId)
+  $kc = Get-KcContainer
+  $prev = $ErrorActionPreference
+  $ErrorActionPreference = "Continue"
+  try {
+    $out = docker exec $kc /opt/keycloak/bin/kcadm.sh get clients -r $script:KcRealm -q clientId=$ClientId --fields id 2>&1 | Out-String
+    $m = $out | Select-String -Pattern '"id"\s*:\s*"([^"]+)"'
+    if ($m) { return $m.Matches[0].Groups[1].Value }
+    return $null
+  } finally {
+    $ErrorActionPreference = $prev
+  }
 }
 
 function Get-KcClientSecret {
   param([string]$InternalId)
   $kc = Get-KcContainer
-  $out = docker exec $kc /opt/keycloak/bin/kcadm.sh get "clients/$InternalId/client-secret" -r $script:KcRealm
-  if ($out -match '"value"\s*:\s*"([^"]+)"') { return $Matches[1] }
-  return $null
+  $prev = $ErrorActionPreference
+  $ErrorActionPreference = "Continue"
+  try {
+    $out = docker exec $kc /opt/keycloak/bin/kcadm.sh get "clients/$InternalId/client-secret" -r $script:KcRealm 2>&1 | Out-String
+    $m = $out | Select-String -Pattern '"value"\s*:\s*"([^"]+)"'
+    if ($m) { return $m.Matches[0].Groups[1].Value }
+    return $null
+  } finally {
+    $ErrorActionPreference = $prev
+  }
 }
 
 function Write-IntegrationPack {

@@ -1,0 +1,22 @@
+﻿{
+    "applicationName":  "Microsoft Dynamics",
+    "clientId":  "dynamics-365",
+    "protocol":  "OIDC",
+    "realm":  "company",
+    "generatedAt":  "2026-06-25T13:38:28.8349659+05:00",
+    "issuer":  "http://localhost:8080/realms/company",
+    "discoveryUrl":  "http://localhost:8080/realms/company/.well-known/openid-configuration",
+    "authorizationEndpoint":  "http://localhost:8080/realms/company/protocol/openid-connect/auth",
+    "tokenEndpoint":  "http://localhost:8080/realms/company/protocol/openid-connect/token",
+    "endSessionEndpoint":  "http://localhost:8080/realms/company/protocol/openid-connect/logout",
+    "redirectUris":  [
+                         "https://dynamics.company.local/auth/callback"
+                     ],
+    "scopes":  [
+                   "openid",
+                   "profile",
+                   "email"
+               ],
+    "publicClient":  false,
+    "instructions":  "Give this pack to the application team. They configure their app with discovery URL and client ID."
+}

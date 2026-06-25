@@ -1,0 +1,13 @@
+﻿{
+    "applicationName":  "Endpoint Central",
+    "clientId":  "endpoint-central",
+    "protocol":  "SAML",
+    "realm":  "company",
+    "generatedAt":  "2026-06-25T13:38:42.2976006+05:00",
+    "samlMetadataUrl":  "http://localhost:8080/realms/company/protocol/saml/descriptor",
+    "entityId":  "http://localhost:8080/realms/company",
+    "redirectUris":  [
+                         "https://endpoint.company.local/saml/consume"
+                     ],
+    "instructions":  "Import IdP metadata XML from samlMetadataUrl into the vendor admin console (ServiceDesk, Temenos, etc.)."
+}

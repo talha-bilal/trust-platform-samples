@@ -1,0 +1,23 @@
+{
+  "name": "company-ldap",
+  "providerId": "ldap",
+  "providerType": "org.keycloak.storage.UserStorageProvider",
+  "config": {
+    "enabled": ["true"],
+    "priority": ["0"],
+    "editMode": ["READ_ONLY"],
+    "syncRegistrations": ["false"],
+    "vendor": ["other"],
+    "usernameLDAPAttribute": ["uid"],
+    "rdnLDAPAttribute": ["uid"],
+    "uuidLDAPAttribute": ["entryUUID"],
+    "userObjectClasses": ["inetOrgPerson", "organizationalPerson"],
+    "connectionUrl": ["ldap://openldap:389"],
+    "usersDn": ["ou=users,dc=company,dc=local"],
+    "bindDn": ["cn=admin,dc=company,dc=local"],
+    "bindCredential": ["admin"],
+    "searchScope": ["1"],
+    "importEnabled": ["true"],
+    "pagination": ["true"]
+  }
+}

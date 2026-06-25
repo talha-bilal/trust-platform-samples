@@ -24,8 +24,6 @@ services:
       LDAP_ADMIN_PASSWORD: "admin"
     ports:
       - "1389:389"
-    volumes:
-      - ./ldap/bootstrap.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/bootstrap.ldif:ro
 
   keycloak:
     image: quay.io/keycloak/keycloak:24.0.5

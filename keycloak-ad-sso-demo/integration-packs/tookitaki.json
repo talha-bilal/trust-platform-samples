@@ -1,0 +1,22 @@
+﻿{
+    "applicationName":  "Compliance (Tookitaki)",
+    "clientId":  "tookitaki",
+    "protocol":  "OIDC",
+    "realm":  "company",
+    "generatedAt":  "2026-06-25T13:39:06.4893182+05:00",
+    "issuer":  "http://localhost:8080/realms/company",
+    "discoveryUrl":  "http://localhost:8080/realms/company/.well-known/openid-configuration",
+    "authorizationEndpoint":  "http://localhost:8080/realms/company/protocol/openid-connect/auth",
+    "tokenEndpoint":  "http://localhost:8080/realms/company/protocol/openid-connect/token",
+    "endSessionEndpoint":  "http://localhost:8080/realms/company/protocol/openid-connect/logout",
+    "redirectUris":  [
+                         "https://compliance.company.local/oauth/callback"
+                     ],
+    "scopes":  [
+                   "openid",
+                   "profile",
+                   "email"
+               ],
+    "publicClient":  false,
+    "instructions":  "Give this pack to the application team. They configure their app with discovery URL and client ID."
+}

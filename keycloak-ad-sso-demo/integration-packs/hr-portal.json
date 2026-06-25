@@ -1,0 +1,22 @@
+﻿{
+    "applicationName":  "HR Portal",
+    "clientId":  "hr-portal",
+    "protocol":  "OIDC",
+    "realm":  "company",
+    "generatedAt":  "2026-06-25T13:38:07.8243518+05:00",
+    "issuer":  "http://localhost:8080/realms/company",
+    "discoveryUrl":  "http://localhost:8080/realms/company/.well-known/openid-configuration",
+    "authorizationEndpoint":  "http://localhost:8080/realms/company/protocol/openid-connect/auth",
+    "tokenEndpoint":  "http://localhost:8080/realms/company/protocol/openid-connect/token",
+    "endSessionEndpoint":  "http://localhost:8080/realms/company/protocol/openid-connect/logout",
+    "redirectUris":  [
+                         "http://localhost:3001/*"
+                     ],
+    "scopes":  [
+                   "openid",
+                   "profile",
+                   "email"
+               ],
+    "publicClient":  true,
+    "instructions":  "Give this pack to the application team. They configure their app with discovery URL and client ID."
+}

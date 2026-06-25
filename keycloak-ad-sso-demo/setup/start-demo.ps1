@@ -35,6 +35,7 @@ if ($Reset) {
 Write-Host "Starting containers (Keycloak, PostgreSQL, LDAP, demo apps)..."
 docker compose up -d
 
+& "$PSScriptRoot/seed-ldap.ps1"
 & "$PSScriptRoot/configure-ldap.ps1"
 & "$PSScriptRoot/register-clients-from-intake.ps1"
 

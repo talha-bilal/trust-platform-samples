@@ -18,13 +18,14 @@ Connect-KcAdmin | Out-Null
 $apps = Get-Content $IntakeFile -Raw | ConvertFrom-Json
 Write-Host "Registering $($apps.Count) applications from intake..."
 
+$prevEa = $ErrorActionPreference
+$ErrorActionPreference = "Continue"
+
 foreach ($app in $apps) {
   $cid = $app.clientId
   if (Test-KcClientExists -ClientId $cid) {
     Write-Host "  [skip] $cid already registered"
-    $kc = Get-KcContainer
-    $json = docker exec $kc /opt/keycloak/bin/kcadm.sh get clients -r company -q clientId=$cid --fields id
-    $internalId = ($json | Select-String '"id"\s*:\s*"([^"]+)"').Matches[0].Groups[1].Value
+    $internalId = Get-KcClientInternalId -ClientId $cid
     $secret = $null
     if ($app.protocol -eq "oidc" -and -not $app.publicClient) {
       $secret = Get-KcClientSecret -InternalId $internalId
@@ -70,8 +71,8 @@ foreach ($app in $apps) {
     throw "Unknown protocol for $cid : $($app.protocol)"
   }
 
-  $json = docker exec $kc /opt/keycloak/bin/kcadm.sh get clients -r company -q clientId=$cid --fields id
-  $internalId = ($json | Select-String '"id"\s*:\s*"([^"]+)"').Matches[0].Groups[1].Value
+  $internalId = Get-KcClientInternalId -ClientId $cid
+  if (-not $internalId) { throw "Could not resolve internal id for $cid" }
   $secret = $null
   if ($app.protocol -eq "oidc" -and -not $app.publicClient) {
     docker exec $kc /opt/keycloak/bin/kcadm.sh create "clients/$internalId/client-secret" -r company | Out-Null
@@ -79,6 +80,8 @@ foreach ($app in $apps) {
   }
   Write-IntegrationPack -App $app -InternalId $internalId -ClientSecret $secret
 }
+
+$ErrorActionPreference = $prevEa
 
 Write-Host ""
 Write-Host "All clients processed. Integration packs in: integration-packs/"

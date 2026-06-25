@@ -33,10 +33,12 @@ This environment mirrors what you will deliver in production. OpenLDAP stands in
 ### Verify Docker
 
 ```powershell
-docker info
+docker version
 ```
 
 If you see `error during connect` → open **Docker Desktop** and wait until the whale icon is steady.
+
+> **Note:** If the start script says Docker is not running but Docker Desktop looks fine, update to the latest demo scripts (a PowerShell + `docker info` stderr issue was fixed).
 
 ---
 
