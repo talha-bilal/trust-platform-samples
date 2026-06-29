@@ -3,7 +3,7 @@
 
 $root = Split-Path -Parent $PSScriptRoot
 $urls = Get-DemoUrls
-$env = Get-DemoEnv
+$demoCfg = Get-DemoEnv
 $configDir = Join-Path $root "demo-apps\config"
 New-Item -ItemType Directory -Force -Path $configDir | Out-Null
 
@@ -26,12 +26,12 @@ foreach ($app in $intake) {
 
   if ($isLive) {
     $port = switch ($cid) {
-      "app-launcher" { $env.APP_LAUNCHER_PORT }
-      "hr-portal" { $env.HR_PORTAL_PORT }
-      "finance-portal" { $env.FINANCE_PORTAL_PORT }
+      "app-launcher" { $demoCfg.APP_LAUNCHER_PORT }
+      "hr-portal" { $demoCfg.HR_PORTAL_PORT }
+      "finance-portal" { $demoCfg.FINANCE_PORTAL_PORT }
       default { "3000" }
     }
-    $base = "$($env.PUBLIC_HOST.TrimEnd('/'))`:$port"
+    $base = "$($demoCfg.PUBLIC_HOST.TrimEnd('/'))`:$port"
     $app.redirectUris = @("$base/*")
     $app.webOrigins = @($base)
   }

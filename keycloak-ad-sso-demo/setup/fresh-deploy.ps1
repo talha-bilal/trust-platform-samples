@@ -15,7 +15,7 @@ Push-Location $root
 
 if (-not (Test-Path ".env")) {
   Copy-Item ".env.example" ".env"
-  Write-Host "Created .env from .env.example — edit COMPANY_DISPLAY_NAME and PUBLIC_HOST, then run again."
+  Write-Host "Created .env from .env.example - edit COMPANY_DISPLAY_NAME and PUBLIC_HOST, then run again."
   Pop-Location
   exit 0
 }
@@ -47,17 +47,17 @@ if (-not $SkipMfa) {
 }
 
 $urls = Get-DemoUrls
-$env = Get-DemoEnv
+$demoCfg = Get-DemoEnv
 
 Write-Host ""
 Write-Host "=== Deploy complete ===" -ForegroundColor Green
 Write-Host ""
 Write-Host "  App launcher  $($urls.Launcher)"
-Write-Host "  Keycloak admin $($urls.Keycloak)  ($($env.KEYCLOAK_ADMIN_USER) / see .env)"
+Write-Host ('  Keycloak admin {0}  (user: {1} - password in .env)' -f $urls.Keycloak, $demoCfg.KEYCLOAK_ADMIN_USER)
 Write-Host ""
 Write-Host "  Admin operations: ADMIN-OPERATIONS-GUIDE.md"
 Write-Host "  Cloud guide:      CLOUD-DEPLOYMENT.md"
-Write-Host "  Login test user:  ahmed / Demo@123"
+Write-Host '  Login test user:  ahmed / Demo@123'
 Write-Host ""
 
 Pop-Location

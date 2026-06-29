@@ -5,9 +5,9 @@
 Wait-KeycloakReady
 Connect-KcAdmin | Out-Null
 $kc = Get-KcContainer
-$env = Get-DemoEnv
-$realm = $env.REALM_NAME
-$name = $env.COMPANY_DISPLAY_NAME
+$demoCfg = Get-DemoEnv
+$realm = $demoCfg.REALM_NAME
+$name = $demoCfg.COMPANY_DISPLAY_NAME
 
 $prev = $ErrorActionPreference
 $ErrorActionPreference = "Continue"
