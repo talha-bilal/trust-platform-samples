@@ -3,7 +3,7 @@
     "clientId":  "finance-portal",
     "protocol":  "OIDC",
     "realm":  "company",
-    "generatedAt":  "2026-06-25T15:19:25.1913141+05:00",
+    "generatedAt":  "2026-06-29T21:36:26.6615311+05:00",
     "issuer":  "http://localhost:8080/realms/company",
     "discoveryUrl":  "http://localhost:8080/realms/company/.well-known/openid-configuration",
     "authorizationEndpoint":  "http://localhost:8080/realms/company/protocol/openid-connect/auth",

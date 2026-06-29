@@ -23,7 +23,10 @@ for ($i = 0; $i -lt 40; $i++) {
 }
 if (-not $ready) { throw "OpenLDAP not ready" }
 
+$prevEa = $ErrorActionPreference
+$ErrorActionPreference = "Continue"
 $check = docker exec $ldap ldapsearch -x -H ldap://localhost -b "ou=users,dc=company,dc=local" -D "cn=admin,dc=company,dc=local" -w admin "(uid=ahmed)" dn 2>&1 | Out-String
+$ErrorActionPreference = $prevEa
 if ($check -match "dn:\s*uid=ahmed") {
   Write-Host "LDAP demo users already seeded."
   Pop-Location

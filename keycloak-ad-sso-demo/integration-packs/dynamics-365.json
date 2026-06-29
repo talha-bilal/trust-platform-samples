@@ -3,7 +3,7 @@
     "clientId":  "dynamics-365",
     "protocol":  "OIDC",
     "realm":  "company",
-    "generatedAt":  "2026-06-25T15:19:35.8595567+05:00",
+    "generatedAt":  "2026-06-29T21:36:41.6403096+05:00",
     "issuer":  "http://localhost:8080/realms/company",
     "discoveryUrl":  "http://localhost:8080/realms/company/.well-known/openid-configuration",
     "authorizationEndpoint":  "http://localhost:8080/realms/company/protocol/openid-connect/auth",
@@ -18,6 +18,6 @@
                    "email"
                ],
     "publicClient":  false,
-    "clientSecret":  "6b5zSdKlDBjHFWFHk6CYSatpImjdSlLX",
+    "clientSecret":  "9knuVPMqpYeoi7HxN6diMrMEhQej1GKx",
     "instructions":  "Give this pack to the application team. They configure their app with discovery URL and client ID."
 }

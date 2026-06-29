@@ -1,3 +1,4 @@
 .env
 demo-apps/config/tenant.json
+demo-apps/*/config/tenant.json
 setup/apps-intake.generated.json

@@ -39,7 +39,7 @@ foreach ($app in $apps) {
 
   if ($app.protocol -eq "oidc") {
     $public = if ($null -ne $app.publicClient) { $app.publicClient } else { $true }
-    $origins = if ($app.webOrigins) { @($app.webOrigins) } else { @("+") }
+    $origins = if ($app.webOrigins) { To-StringArray $app.webOrigins } else { @("+") }
     $payload = [ordered]@{
       clientId                 = $cid
       name                     = $app.name
@@ -48,15 +48,18 @@ foreach ($app in $apps) {
       publicClient             = $public
       standardFlowEnabled      = $true
       directAccessGrantsEnabled = $false
-      redirectUris             = @($app.redirectUris)
+      redirectUris             = To-StringArray $app.redirectUris
       webOrigins               = $origins
       attributes               = @{ "pkce.code.challenge.method" = "S256" }
     }
     $json = $payload | ConvertTo-Json -Depth 6
     [System.IO.File]::WriteAllText($tmpLocal, $json)
     $null = docker cp $tmpLocal "${kc}:/tmp/kc-client.json" 2>&1
-    $null = docker exec $kc /opt/keycloak/bin/kcadm.sh create clients -r company -f /tmp/kc-client.json 2>&1
+    $createOut = docker exec $kc /opt/keycloak/bin/kcadm.sh create clients -r company -f /tmp/kc-client.json 2>&1 | Out-String
+    if ($LASTEXITCODE -ne 0) { throw "kcadm create failed for $cid`n$createOut" }
     Write-Host "  [oidc] Created $cid"
+    $idMatch = $createOut | Select-String -Pattern "id '([^']+)'"
+    $parsedId = if ($idMatch) { $idMatch.Matches[0].Groups[1].Value } else { $null }
   } elseif ($app.protocol -eq "saml") {
     $root = if ($app.rootUrl) { $app.rootUrl } else { "https://placeholder.company.local" }
     $payload = [ordered]@{
@@ -64,22 +67,25 @@ foreach ($app in $apps) {
       name        = $app.name
       enabled     = $true
       protocol    = "saml"
-      redirectUris = @($app.redirectUris)
+      redirectUris = To-StringArray $app.redirectUris
       rootUrl     = $root
       attributes  = @{ "saml.assertion.signature" = "false" }
     }
     $json = $payload | ConvertTo-Json -Depth 6
     [System.IO.File]::WriteAllText($tmpLocal, $json)
     $null = docker cp $tmpLocal "${kc}:/tmp/kc-client.json" 2>&1
-    $null = docker exec $kc /opt/keycloak/bin/kcadm.sh create clients -r company -f /tmp/kc-client.json 2>&1
+    $createOut = docker exec $kc /opt/keycloak/bin/kcadm.sh create clients -r company -f /tmp/kc-client.json 2>&1 | Out-String
+    if ($LASTEXITCODE -ne 0) { throw "kcadm create failed for $cid`n$createOut" }
     Write-Host "  [saml] Created $cid"
+    $idMatch = $createOut | Select-String -Pattern "id '([^']+)'"
+    $parsedId = if ($idMatch) { $idMatch.Matches[0].Groups[1].Value } else { $null }
   } else {
     throw "Unknown protocol for $cid : $($app.protocol)"
   }
 
   Remove-Item $tmpLocal -ErrorAction SilentlyContinue
 
-  $internalId = Get-KcClientInternalId -ClientId $cid
+  $internalId = if ($parsedId) { $parsedId } else { Get-KcClientInternalId -ClientId $cid }
   if (-not $internalId) { throw "Could not resolve internal id for $cid" }
   $secret = $null
   if ($app.protocol -eq "oidc" -and -not $app.publicClient) {

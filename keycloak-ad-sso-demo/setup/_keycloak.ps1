@@ -82,6 +82,13 @@ function Invoke-Kcadm {
   return $output
 }
 
+function To-StringArray {
+  param([object]$Value)
+  if ($null -eq $Value) { return ,[string[]]@() }
+  if ($Value -is [string]) { return ,[string[]]@($Value) }
+  return ,[string[]]@($Value)
+}
+
 function Test-KcClientExists {
   param([string]$ClientId)
   $kc = Get-KcContainer
@@ -96,14 +103,20 @@ function Test-KcClientExists {
 }
 
 function Get-KcClientInternalId {
-  param([string]$ClientId)
+  param(
+    [string]$ClientId,
+    [int]$MaxAttempts = 5
+  )
   $kc = Get-KcContainer
   $prev = $ErrorActionPreference
   $ErrorActionPreference = "Continue"
   try {
-    $out = docker exec $kc /opt/keycloak/bin/kcadm.sh get clients -r $script:KcRealm -q clientId=$ClientId --fields id 2>&1 | Out-String
-    $m = $out | Select-String -Pattern '"id"\s*:\s*"([^"]+)"'
-    if ($m) { return $m.Matches[0].Groups[1].Value }
+    for ($i = 0; $i -lt $MaxAttempts; $i++) {
+      $out = docker exec $kc /opt/keycloak/bin/kcadm.sh get clients -r $script:KcRealm -q clientId=$ClientId --fields id 2>&1 | Out-String
+      $m = $out | Select-String -Pattern '"id"\s*:\s*"([^"]+)"'
+      if ($m) { return $m.Matches[0].Groups[1].Value }
+      Start-Sleep -Seconds 1
+    }
     return $null
   } finally {
     $ErrorActionPreference = $prev

@@ -58,7 +58,16 @@ $tenant = [ordered]@{
 }
 
 $tenantPath = Join-Path $configDir "tenant.json"
-[System.IO.File]::WriteAllText($tenantPath, ($tenant | ConvertTo-Json -Depth 6))
+$tenantJson = $tenant | ConvertTo-Json -Depth 6
+[System.IO.File]::WriteAllText($tenantPath, $tenantJson)
+
+# Copy into each nginx app folder (avoids nested Docker volume mounts on Windows)
+$appDirs = @("app-launcher", "hr-portal", "finance-portal")
+foreach ($app in $appDirs) {
+  $dir = Join-Path $root "demo-apps\$app\config"
+  New-Item -ItemType Directory -Force -Path $dir | Out-Null
+  [System.IO.File]::WriteAllText((Join-Path $dir "tenant.json"), $tenantJson)
+}
 
 $genIntakePath = Join-Path $PSScriptRoot "apps-intake.generated.json"
 [System.IO.File]::WriteAllText($genIntakePath, ($generatedIntake | ConvertTo-Json -Depth 6))

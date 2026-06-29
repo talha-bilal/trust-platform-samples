@@ -60,7 +60,6 @@ services:
       - "${APP_LAUNCHER_PORT:-3000}:80"
     volumes:
       - ./demo-apps/app-launcher:/usr/share/nginx/html:ro
-      - ./demo-apps/config:/usr/share/nginx/html/config:ro
 
   hr-portal:
     image: nginx:alpine
@@ -68,7 +67,6 @@ services:
       - "${HR_PORTAL_PORT:-3001}:80"
     volumes:
       - ./demo-apps/hr-portal:/usr/share/nginx/html:ro
-      - ./demo-apps/config:/usr/share/nginx/html/config:ro
 
   finance-portal:
     image: nginx:alpine
@@ -76,7 +74,6 @@ services:
       - "${FINANCE_PORTAL_PORT:-3002}:80"
     volumes:
       - ./demo-apps/finance-portal:/usr/share/nginx/html:ro
-      - ./demo-apps/config:/usr/share/nginx/html/config:ro
 
 volumes:
   kc_pg:

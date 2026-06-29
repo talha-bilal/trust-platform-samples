@@ -3,7 +3,7 @@
     "clientId":  "servicedesk-plus",
     "protocol":  "SAML",
     "realm":  "company",
-    "generatedAt":  "2026-06-25T15:19:40.0779486+05:00",
+    "generatedAt":  "2026-06-29T21:36:48.4629085+05:00",
     "samlMetadataUrl":  "http://localhost:8080/realms/company/protocol/saml/descriptor",
     "entityId":  "http://localhost:8080/realms/company",
     "redirectUris":  [

@@ -51,7 +51,10 @@ try {
 }
 Pop-Location
 
-$tenantFile = Join-Path $root "demo-apps\config\tenant.json"
+$tenantFile = Join-Path $root "demo-apps\app-launcher\config\tenant.json"
+if (-not (Test-Path $tenantFile)) {
+  $tenantFile = Join-Path $root "demo-apps\config\tenant.json"
+}
 if (Test-Path $tenantFile) {
   Write-Host "[OK]   tenant.json exists" -ForegroundColor Green
   $ok++
