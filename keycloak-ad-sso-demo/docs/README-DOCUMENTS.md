@@ -35,6 +35,7 @@ python scripts/generate_proposal_pdf.py
 | File | Purpose |
 |------|---------|
 | [IAM-OIDC-AD-Flow.pdf](./IAM-OIDC-AD-Flow.pdf) | OIDC + AD technical deep-dive |
+| **[SecureLink-IAM-PAM-NoAD-Architecture.md](./SecureLink-IAM-PAM-NoAD-Architecture.md)** | **New lead: IAM + PAM without Active Directory** |
 | [../DEMO-WALKTHROUGH.md](../DEMO-WALKTHROUGH.md) | Live demo script |
 
 ---
